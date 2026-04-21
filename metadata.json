@@ -1,0 +1,6 @@
+{
+  "name": "StellarYield",
+  "description": "Decentralized micro-lending and yield protocol built natively on Stellar. Earn yield from shared liquidity pools and access loans based on on-chain reputation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
