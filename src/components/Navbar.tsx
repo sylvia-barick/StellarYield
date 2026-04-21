@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wallet, LogOut, ShieldCheck, Activity } from 'lucide-react';
+import { Wallet, LogOut, ShieldCheck, Activity, TrendingUp, ArrowUpRight } from 'lucide-react';
 import { connectWallet, WalletState } from '../lib/stellar';
 import { cn } from '../lib/utils';
 
@@ -30,40 +30,50 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 border-b",
-      scrolled ? "bg-black/80 backdrop-blur-md border-white/10 shadow-lg" : "bg-transparent border-transparent"
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-8 py-5 border-b",
+      scrolled ? "bg-[#0A0A0A]/90 backdrop-blur-xl border-[#2A2B2E] shadow-2xl" : "bg-transparent border-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-black italic text-white">
-            S
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+            <Activity className="w-6 h-6" />
           </div>
           <div>
-            <span className="text-xl font-bold tracking-tighter text-white block leading-tight">STELLARYIELD</span>
+            <span className="text-lg font-extrabold tracking-tight text-white block leading-tight">STELLARYIELD</span>
+            <span className="mono-label !text-[8px] tracking-[0.2em]">Institutional Micro-Lending</span>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-8 font-mono text-[10px] uppercase tracking-widest text-white/60">
-          <a href="#yield" className="hover:text-blue-400 transition-colors">Supply</a>
-          <a href="#borrow" className="hover:text-blue-400 transition-colors">Borrow</a>
-          <a href="#reputation" className="hover:text-blue-400 transition-colors">Reputation</a>
+        <div className="hidden md:flex items-center gap-10 font-mono text-[10px] uppercase tracking-[0.2em] text-[#8E9299]">
+          <a href="#yield" className="hover:text-white transition-colors flex items-center gap-1.5 group">
+            <TrendingUp className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+            Supply
+          </a>
+          <a href="#borrow" className="hover:text-white transition-colors flex items-center gap-1.5 group">
+            <ArrowUpRight className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+            Borrow
+          </a>
+          <a href="#reputation" className="hover:text-white transition-colors flex items-center gap-1.5 group">
+            <ShieldCheck className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+            Governance
+          </a>
         </div>
 
-        <div>
+        <div className="flex items-center gap-4">
           {wallet.connected ? (
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col items-end mr-2">
-                <span className="text-[10px] text-green-500 font-mono uppercase tracking-widest flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                  Active
-                </span>
-                <span className="text-xs font-mono font-medium text-white/80">
-                  {wallet.address?.slice(0, 4)}...{wallet.address?.slice(-4)}
+            <div className="flex items-center gap-4 pl-4 border-l border-[#2A2B2E]">
+              <div className="flex flex-col items-end">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                  <span className="mono-label !text-[9px]">Live Status</span>
+                </div>
+                <span className="text-xs font-mono font-bold text-white mt-1">
+                   {wallet.address?.slice(0, 6)}...{wallet.address?.slice(-6)}
                 </span>
               </div>
               <button 
                 onClick={handleDisconnect}
-                className="p-2.5 rounded-full bg-white/5 text-white/50 hover:bg-red-500/10 hover:text-red-500 transition-all border border-white/10"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#2A2B2E]/50 text-[#8E9299] hover:bg-red-500/10 hover:text-red-500 transition-all border border-[#2A2B2E]"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -71,10 +81,10 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
           ) : (
             <button 
               onClick={handleConnect}
-              className="flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full font-bold text-sm shadow-xl hover:bg-blue-400 transition-all active:scale-95"
+              className="group relative flex items-center gap-2 bg-indigo-600 px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all hover:bg-indigo-500 hover:shadow-[0_0_25px_rgba(79,70,229,0.4)] active:scale-95"
             >
-              <Wallet className="w-4 h-4" />
-              Connect Wallet
+              <Wallet className="w-4 h-4 transition-transform group-hover:-rotate-12" />
+              Initialize Wallet
             </button>
           )}
         </div>

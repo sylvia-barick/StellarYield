@@ -62,135 +62,173 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-500/30 selection:text-white">
+    <div className="min-h-screen bg-[#0A0A0A] text-[#E4E3E0] font-sans selection:bg-indigo-500/30 selection:text-white relative overflow-x-hidden">
+      <div className="fixed inset-0 grid-overlay -z-10 opacity-50" />
       <Navbar wallet={wallet} setWallet={setWallet} />
 
-      <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
-        {/* Hero / Stats Banner */}
-        <section className="mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-8">
-              <div className="mono mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                Soroban Testnet v1.2 Enabled
+      <main className="pt-32 pb-24 px-8 max-w-7xl mx-auto relative z-10">
+        {/* Header Stats Bento */}
+        <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-16">
+          <div className="lg:col-span-2 technical-card p-10 flex flex-col justify-center relative group min-h-[320px]">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Activity className="w-48 h-48 rotate-12" />
+            </div>
+            <div className="relative z-10">
+              <div className="mono-label mb-6 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                Connectivity: Horizon Testnet
               </div>
-              <h1 className="hero-text">
-                Decentralize<br/>
-                <span className="text-blue-500">Every</span> Yield
+              <h1 className="text-5xl font-black tracking-tighter leading-[0.95] mb-6">
+                LIQUIDITY <br />
+                <span className="text-white/40">MEETS</span> REPUTATION
               </h1>
-              <p className="text-zinc-400 max-w-lg text-xl mt-8 leading-relaxed font-light">
-                Micro-lending on Stellar using on-chain transaction history 
-                to bypass traditional KYC and collateral.
+              <p className="text-[#8E9299] max-w-sm text-sm leading-relaxed mb-8 font-medium">
+                The first decentralized micro-lending engine on Stellar. 
+                Using on-chain history to enable collateral-efficient financing.
               </p>
-              <div className="mt-12 flex flex-wrap gap-6">
-                <button onClick={() => setActiveTab('supply')} className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-xl font-black text-lg transition-all active:scale-95 shadow-lg shadow-blue-600/20 flex items-center gap-2">
-                  Deposit XLM
-                  <ChevronRight className="w-5 h-5" />
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => setActiveTab('supply')}
+                  className="bg-white text-black px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all active:scale-95 shadow-xl shadow-white/5"
+                >
+                  Enter Pool
                 </button>
-                <button onClick={() => setActiveTab('borrow')} className="border border-zinc-700 hover:border-zinc-500 text-white px-10 py-5 rounded-xl font-black text-lg transition-all">
-                  Borrow USDC
+                <button 
+                  onClick={() => setActiveTab('borrow')}
+                  className="border border-[#2A2B2E] text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-all"
+                >
+                  Quick Borrow
                 </button>
               </div>
             </div>
+          </div>
 
-            <div className="lg:col-span-4 flex flex-col gap-6">
-              <div className="glass p-8 rounded-[32px]">
-                <div className="mono mb-3">Protocol TVL</div>
-                <div className="text-5xl font-black tracking-tighter">${poolTvl}</div>
-                <div className="mt-3 flex items-center gap-2 text-green-400 font-bold text-sm">
-                  <TrendingUp className="w-4 h-4" />
-                  +12.4% vs last week
+          <div className="technical-card p-8 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="mono-label">Protocol TVL</span>
+                <div className="p-1.5 bg-indigo-500/10 rounded-md">
+                  <BarChart3 className="w-4 h-4 text-indigo-400" />
                 </div>
               </div>
-              
-              <div className="glass h-40 w-full rounded-[32px] overflow-hidden p-4 pt-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={yieldData}>
-                    <Area type="monotone" dataKey="yield" stroke="#3b82f6" strokeWidth={4} fillOpacity={0} />
-                  </AreaChart>
-                </ResponsiveContainer>
+              <div className="text-4xl font-black text-white tracking-tighter">
+                ${formatAmount(poolTvl)}
+              </div>
+              <div className="mt-2 flex items-center gap-1.5 text-emerald-400 font-bold text-[10px] tracking-wider uppercase">
+                <TrendingUp className="w-3 h-3" />
+                +12.4% Δ
+              </div>
+            </div>
+            
+            <div className="h-24 w-full mt-6 -mx-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={yieldData}>
+                  <Area type="monotone" dataKey="yield" stroke="#6366f1" strokeWidth={3} fillOpacity={0} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="technical-card p-8 flex flex-col justify-between accent-border">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="mono-label text-indigo-400">Yield Average</span>
+                <Clock className="w-4 h-4 text-[#8E9299]" />
+              </div>
+              <div className="text-4xl font-black text-white tracking-tighter">
+                5.82<span className="text-indigo-400">%</span>
+              </div>
+              <p className="text-[#8E9299] text-[10px] uppercase font-bold mt-4 tracking-widest">Fixed APY Baseline</p>
+            </div>
+            <div className="pt-6 border-t border-[#2A2B2E]">
+              <div className="flex justify-between text-[10px] font-mono mb-2">
+                <span className="text-indigo-400 opacity-60">XLM REWARD</span>
+                <span className="text-white">Active</span>
+              </div>
+              <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden">
+                <div className="bg-indigo-600 h-full w-[65%]" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Dynamic Navigation Tabs */}
-        <div className="flex gap-10 mb-12 border-b border-zinc-900 pb-2">
+        {/* Tab Interface */}
+        <div className="flex items-center gap-10 mb-10 border-b border-[#2A2B2E]">
           <button 
             onClick={() => setActiveTab('supply')}
             className={cn(
-              "pb-4 font-black uppercase tracking-widest text-xs transition-all relative",
-              activeTab === 'supply' ? "text-white" : "text-zinc-600 hover:text-zinc-400"
+              "pb-4 font-mono text-[10px] uppercase tracking-[0.2em] transition-all relative",
+              activeTab === 'supply' ? "text-white" : "text-[#8E9299] hover:text-white"
             )}
           >
-            Lending Pools
-            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-1 bg-blue-500" />}
+            01. LENDING_VAULTS
+            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
           </button>
           <button 
             onClick={() => setActiveTab('borrow')}
             className={cn(
-              "pb-4 font-black uppercase tracking-widest text-xs transition-all relative",
-              activeTab === 'borrow' ? "text-white" : "text-zinc-600 hover:text-zinc-400"
+              "pb-4 font-mono text-[10px] uppercase tracking-[0.2em] transition-all relative",
+              activeTab === 'borrow' ? "text-white" : "text-[#8E9299] hover:text-white"
             )}
           >
-            Borrow Console
-            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-1 bg-blue-500" />}
+            02. BORROW_CONSOLE
+            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Main Work Area */}
-          <div className="lg:col-span-8 space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-8 space-y-8">
             <AnimatePresence mode="wait">
               {activeTab === 'supply' ? (
                 <motion.div 
                   key="supply"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="space-y-8"
+                  exit={{ opacity: 0, x: 10 }}
+                  className="space-y-6"
                 >
-                  <div className="glass p-10 rounded-[40px] accent-glow">
-                    <div className="flex items-center justify-between mb-10">
+                  <div className="technical-card p-10">
+                    <div className="flex items-center justify-between mb-12">
                       <div>
-                        <div className="mono mb-2">Primary Asset</div>
-                        <h2 className="text-4xl font-black tracking-tighter">XLM Core Pool</h2>
+                        <span className="mono-label mb-2 block">Protocol Asset</span>
+                        <h2 className="text-3xl font-black text-white tracking-tighter uppercase">XLM Core Vault</h2>
                       </div>
-                      <div className="text-right">
-                        <div className="mono mb-2">Fixed APY</div>
-                        <span className="text-4xl font-black text-blue-500 tracking-tighter">14.2%</span>
+                      <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-center">
+                        <span className="mono-label !text-emerald-400 mb-1 block">Live APY</span>
+                        <span className="text-3xl font-black text-emerald-400 tracking-tighter">14.2%</span>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                      <div className="bg-white/5 rounded-3xl p-6 border border-white/5">
-                        <div className="mono mb-4 text-zinc-500">Your Deposits</div>
+                      <div className="bg-[#1E1F23]/50 rounded-xl p-6 border border-[#2A2B2E]">
+                        <span className="mono-label mb-4 block">Personal Stake</span>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black">0.00</span>
-                          <span className="text-zinc-600 font-bold uppercase text-xs">XLM</span>
+                          <span className="text-3xl font-black text-white">0.00</span>
+                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">XLM</span>
                         </div>
                       </div>
-                      <div className="bg-white/5 rounded-3xl p-6 border border-white/5">
-                        <div className="mono mb-4 text-zinc-500">Accrued Yield</div>
+                      <div className="bg-[#1E1F23]/50 rounded-xl p-6 border border-[#2A2B2E]">
+                        <span className="mono-label mb-4 block">Yield Accrued</span>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black text-blue-400">0.00</span>
-                          <span className="text-zinc-600 font-bold uppercase text-xs">XLM</span>
+                          <span className="text-3xl font-black text-emerald-400">0.00</span>
+                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">XLM</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-4">
                       <div className="relative">
+                        <div className="absolute left-6 top-1/2 -translate-y-1/2 mono-label !text-[#8E9299]">AMOUNT</div>
                         <input 
                           type="number" 
                           placeholder="0.00" 
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-8 py-6 font-black text-2xl focus:border-blue-500 outline-none transition-all placeholder:text-zinc-700"
+                          className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-2xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
                         />
-                        <div className="absolute right-6 top-7 mono text-blue-500 font-black cursor-pointer hover:text-blue-400">MAX</div>
+                        <button className="absolute right-6 top-1/2 -translate-y-1/2 mono-label text-indigo-400 font-black cursor-pointer hover:text-indigo-300 transition-colors bg-indigo-500/10 px-2 py-1 rounded">MAX</button>
                       </div>
-                      <button className="w-full bg-white text-black py-6 rounded-2xl font-black text-lg hover:bg-blue-400 transition-all active:scale-[0.99] flex items-center justify-center gap-3">
-                        Supply Assets
-                        <ArrowUpRight className="w-6 h-6" />
+                      <button className="w-full bg-white text-black py-6 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-indigo-500 hover:text-white transition-all active:scale-[0.99] flex items-center justify-center gap-3">
+                        Initialize Deposit
+                        <ArrowUpRight className="w-5 h-5" />
                       </button>
                     </div>
                   </div>
@@ -198,64 +236,67 @@ export default function App() {
               ) : (
                 <motion.div 
                   key="borrow"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="space-y-8"
+                  exit={{ opacity: 0, x: 10 }}
+                  className="space-y-6"
                 >
-                   <div className="glass p-10 rounded-[40px] accent-glow border-blue-500/50">
-                    <div className="flex items-center justify-between mb-10">
+                   <div className="technical-card p-10 border-indigo-500/30">
+                    <div className="flex items-center justify-between mb-12">
                       <div>
-                        <div className="mono mb-2">Micro-Loan Program</div>
-                        <h2 className="text-4xl font-black tracking-tighter">Fast Credit</h2>
+                        <span className="mono-label mb-2 block">Micro-Financing</span>
+                        <h2 className="text-3xl font-black text-white tracking-tighter uppercase">Algorithm Credit</h2>
                       </div>
-                      <div className="text-right">
-                        <div className="mono mb-2">Total Capacity</div>
-                        <span className="text-4xl font-black text-blue-500 tracking-tighter">
-                          {reputation ? `${(reputation.score * 2.5).toFixed(0)} XLM` : "0 XLM"}
+                      <div className="p-4 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-center">
+                        <span className="mono-label mb-1 block">Your Limit</span>
+                        <span className="text-3xl font-black text-indigo-400 tracking-tighter">
+                          {reputation ? `${(reputation.score * 2.5).toFixed(0)}` : "0"} <span className="text-sm">XLM</span>
                         </span>
                       </div>
                     </div>
 
                     {!wallet.connected ? (
-                      <div className="p-16 text-center bg-white/5 rounded-3xl border border-dashed border-white/10">
-                        <Wallet className="w-16 h-16 text-zinc-700 mx-auto mb-6" />
-                        <h3 className="text-2xl font-black mb-2 uppercase">Connect for Credit</h3>
-                        <p className="text-zinc-500 font-mono text-xs uppercase tracking-widest leading-loose">Freighter required for identity verification</p>
+                      <div className="p-20 text-center bg-[#1E1F23]/50 rounded-xl border-2 border-dashed border-[#2A2B2E]">
+                        <div className="w-16 h-16 bg-[#0A0A0A] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#2A2B2E] shadow-2xl">
+                          <Wallet className="w-7 h-7 text-[#8E9299]" />
+                        </div>
+                        <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">Identity Required</h3>
+                        <p className="text-[#8E9299] font-mono text-[10px] uppercase tracking-widest">Connect Freighter to compute reputation score</p>
                       </div>
                     ) : loading ? (
-                       <div className="p-16 text-center">
-                        <Activity className="w-12 h-12 text-blue-500 animate-spin mx-auto mb-6" />
-                        <div className="mono animate-pulse">Syncing Horizon Nodes...</div>
+                       <div className="p-20 text-center">
+                        <Activity className="w-12 h-12 text-indigo-500 animate-spin mx-auto mb-6" />
+                        <div className="mono-label animate-pulse">Syncing Blockchain Data...</div>
                        </div>
                     ) : (
                       <div className="space-y-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="p-8 bg-blue-600/10 rounded-3xl border border-blue-500/20">
-                            <div className="mono mb-4 text-blue-400">Current APR</div>
-                            <span className="text-5xl font-black">
+                          <div className="p-8 bg-[#1E1F23]/50 rounded-xl border border-[#2A2B2E]">
+                            <span className="mono-label mb-4 block">Dynamic APR</span>
+                            <span className="text-5xl font-black text-white">
                               {reputation ? (15 - (reputation.score / 100)).toFixed(1) : "15.0"}%
                             </span>
                           </div>
-                          <div className="p-8 bg-green-500/10 rounded-3xl border border-green-500/20">
-                            <div className="mono mb-4 text-green-400">Reputation Tier</div>
-                            <span className="text-5xl font-black uppercase">
-                              {reputation?.tier || "LOW"}
+                          <div className="p-8 bg-indigo-600/10 rounded-xl border border-indigo-500/20 flex flex-col justify-center">
+                            <span className="mono-label mb-4 block text-indigo-400">Reputation Level</span>
+                            <span className="text-4xl font-black text-white uppercase tracking-tighter">
+                              {reputation?.tier || "NONE"}
                             </span>
                           </div>
                         </div>
 
-                        <div className="space-y-8">
+                        <div className="space-y-6">
                           <div className="relative">
+                             <div className="absolute left-6 top-1/2 -translate-y-1/2 mono-label !text-[#8E9299]">AMOUNT</div>
                             <input 
                               type="number" 
-                              placeholder="Loan amount..." 
-                              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-8 py-6 font-black text-2xl focus:border-blue-500 outline-none transition-all placeholder:text-zinc-700"
+                              placeholder="0.00" 
+                              className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-2xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
                             />
                           </div>
-                          <button className="w-full bg-blue-600 text-white py-6 rounded-2xl font-black text-lg hover:bg-blue-500 transition-all active:scale-[0.99] flex items-center justify-center gap-3">
-                            Confirm Borrow
-                            <ShieldCheck className="w-6 h-6" />
+                          <button className="w-full bg-indigo-600 text-white py-6 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-indigo-500 transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-xl shadow-indigo-600/20">
+                            Confirm Micro-Loan
+                            <ShieldCheck className="w-5 h-5 transition-transform group-hover:scale-110" />
                           </button>
                         </div>
                       </div>
@@ -265,145 +306,200 @@ export default function App() {
               )}
             </AnimatePresence>
 
-            {/* Protocol Insights Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-               <div className="glass p-8 rounded-3xl col-span-2">
+            {/* Protocol Insights Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               <div className="technical-card p-8">
                  <div className="flex items-center gap-3 mb-8">
-                   <div className="p-3 bg-blue-500/20 rounded-2xl">
-                     <Activity className="w-6 h-6 text-blue-500" />
+                   <div className="p-2.5 bg-indigo-500/10 rounded-lg">
+                     <Activity className="w-5 h-5 text-indigo-500" />
                    </div>
-                   <h3 className="text-xl font-black tracking-tighter uppercase">Protocol Solvency</h3>
+                   <h3 className="text-sm font-bold uppercase tracking-wider text-white">Safety Metrics</h3>
                  </div>
-                 <div className="flex items-end justify-between mb-4">
-                   <span className="font-mono text-xs uppercase tracking-widest text-zinc-500">Security Index</span>
-                   <span className="text-4xl font-black">98.2%</span>
+                 <div className="space-y-6">
+                    <div>
+                      <div className="flex justify-between text-[10px] font-mono mb-3">
+                        <span className="text-[#8E9299]">SOLVENCY RATIO</span>
+                        <span className="text-white font-bold">98.2%</span>
+                      </div>
+                      <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
+                        <div className="bg-indigo-500 h-full w-[98.2%]" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-[10px] font-mono mb-3">
+                        <span className="text-[#8E9299]">RESERVE RATIO</span>
+                        <span className="text-indigo-400 font-bold">2.5X</span>
+                      </div>
+                      <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
+                        <div className="bg-indigo-500 h-full w-[70%]" />
+                      </div>
+                    </div>
                  </div>
-                 <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
-                   <div className="bg-blue-500 h-full w-[98.2%]" />
-                 </div>
-                 <p className="mt-8 text-xs font-mono tracking-wide text-zinc-500 leading-relaxed uppercase">
-                   Verified by Soroban smart contract invariants. Liquidity buffers are maintained at 2.5x standard withdrawal request capacity.
+                 <p className="mt-8 text-[9px] font-mono tracking-widest text-[#8E9299] leading-relaxed uppercase">
+                   Verified by Soroban smart contract invariants. Protocols state is decentralized.
                  </p>
                </div>
 
-               <div className="glass p-8 rounded-3xl border-white/5 flex flex-col justify-between">
-                 <div>
-                   <div className="mono mb-4 text-zinc-500">Network</div>
-                   <div className="font-black text-xl mb-1 uppercase">Stellar v21</div>
-                   <div className="font-mono text-[10px] text-green-500">UPTIME 99.99%</div>
+               <div className="technical-card p-8 flex flex-col justify-between">
+                 <div className="flex items-center gap-3 mb-8">
+                   <div className="p-2.5 bg-indigo-500/10 rounded-lg">
+                     <History className="w-5 h-5 text-indigo-500" />
+                   </div>
+                   <h3 className="text-sm font-bold uppercase tracking-wider text-white">Event Log</h3>
                  </div>
-                 <div className="pt-8 border-t border-white/5">
-                    <div className="mono mb-2 text-zinc-500">Latency</div>
-                    <div className="font-black text-xl uppercase">240ms</div>
+                 <div className="space-y-4">
+                    <div className="flex items-center justify-between p-3 bg-[#0A0A0A] rounded-lg border border-[#2A2B2E]">
+                      <span className="font-mono text-[9px] text-[#8E9299]">HORIZON_SYNC</span>
+                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">SUCCESS</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-[#0A0A0A] rounded-lg border border-[#2A2B2E]">
+                      <span className="font-mono text-[9px] text-[#8E9299]">CONTRACT_V1_2</span>
+                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">ACTIVE</span>
+                    </div>
+                 </div>
+                 <div className="mt-8 flex items-center justify-between pt-6 border-t border-[#2A2B2E]">
+                    <span className="mono-label !text-[9px]">System Latency</span>
+                    <span className="text-xs font-mono font-bold text-white">240MS</span>
                  </div>
                </div>
             </div>
           </div>
 
-          {/* Sidebar / Reputation */}
-          <div className="lg:col-span-4 space-y-8">
+          {/* Sidebar Area */}
+          <div className="lg:col-span-4 space-y-6">
             <div className={cn(
-              "glass rounded-[40px] p-10 transition-all duration-700",
-              reputation ? "border-blue-500/30 accent-glow" : "opacity-40 grayscale"
+              "technical-card p-10 transition-all duration-700 relative group overflow-hidden",
+              reputation ? "border-indigo-500/40" : "opacity-40 grayscale"
             )}>
               <div className="flex items-center justify-between mb-10">
-                <h3 className="text-2xl font-black tracking-tighter uppercase">On-Chain Score</h3>
-                <ShieldCheck className={cn("w-8 h-8", reputation ? "text-blue-500" : "text-zinc-700")} />
+                <h3 className="text-sm font-bold uppercase tracking-wider text-white border-l-2 border-indigo-500 pl-3">Reputation Engine</h3>
+                <ShieldCheck className={cn("w-6 h-6", reputation ? "text-indigo-500" : "text-[#2A2B2E]")} />
               </div>
 
               {reputation ? (
-                <div className="space-y-10">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <div className="text-8xl font-black tracking-tighter tabular-nums leading-none mb-4">
+                <div className="space-y-12">
+                  <div className="relative text-center py-4">
+                    <div className="text-[120px] font-black tracking-tighter text-white/5 absolute inset-0 flex items-center justify-center leading-none select-none">
+                      {reputation.score}
+                    </div>
+                    <div className="relative z-10">
+                      <div className="text-7xl font-black text-white tracking-tighter mb-2">
                         {reputation.score}
                       </div>
-                      <div className="mono text-blue-400 font-black tracking-[0.2em]">{reputation.tier} TIER USER</div>
+                      <div className="mono-label text-indigo-400 font-bold tracking-[0.25em]">{reputation.tier} TIER PROFILE</div>
                     </div>
                   </div>
 
-                  <div className="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(reputation.score / 1000) * 100}%` }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="bg-blue-500 h-full" 
-                    />
+                  <div className="space-y-6 pt-10 border-t border-[#2A2B2E]">
+                    <div>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="mono-label !text-[#8E9299]">Account age index</span>
+                        <span className="text-xs font-mono font-bold">{formatAmount(reputation.factors.accountAge / 10)} DAYS</span>
+                      </div>
+                      <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(reputation.factors.accountAge / 250) * 100}%` }}
+                          className="bg-indigo-500 h-full" 
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="mono-label !text-[#8E9299]">Network activity density</span>
+                        <span className="text-xs font-mono font-bold text-white">{reputation.factors.transactionCount} TXS</span>
+                      </div>
+                      <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(reputation.factors.transactionCount / 50) * 100}%` }}
+                          className="bg-white h-full" 
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-6 pt-10 border-t border-white/5">
-                    <div className="flex justify-between items-center group cursor-default">
-                      <span className="mono text-zinc-500 group-hover:text-zinc-300 transition-colors">Account Age</span>
-                      <span className="font-black text-lg">{formatAmount(reputation.factors.accountAge / 10)}D</span>
-                    </div>
-                    <div className="flex justify-between items-center group cursor-default">
-                      <span className="mono text-zinc-500 group-hover:text-zinc-300 transition-colors">Activity Rate</span>
-                      <span className="font-black text-lg">{reputation.factors.transactionCount}/50</span>
-                    </div>
-                  </div>
-
-                  <p className="font-mono text-[10px] uppercase text-zinc-500 leading-relaxed tracking-widest text-center italic opacity-60">
-                    *Score generated via public horizon explorer data
+                  <p className="font-mono text-[9px] uppercase text-[#8E9299] leading-relaxed tracking-widest text-center opacity-60">
+                    Sourced from open horizon explorer v2.10
                   </p>
                 </div>
               ) : (
-                <div className="py-20 text-center space-y-8">
-                  <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto border border-dashed border-white/20">
-                    <Lock className="w-8 h-8 text-zinc-800" />
+                <div className="py-24 text-center space-y-6">
+                  <div className="w-16 h-16 bg-[#0A0A0A] rounded-full flex items-center justify-center mx-auto border border-[#2A2B2E]">
+                    <Lock className="w-6 h-6 text-[#2A2B2E]" />
                   </div>
-                  <div className="space-y-2">
-                    <div className="mono text-zinc-600">Verification Pending</div>
-                    <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-700">Waiting for Freighter sync</p>
+                  <div className="space-y-1">
+                    <div className="mono-label">Authentication Pending</div>
+                    <p className="text-[10px] font-mono text-[#2A2B2E] uppercase">Waiting for signature</p>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="glass p-10 rounded-[40px] bg-blue-600/5 border-blue-500/20">
-              <div className="mono mb-6 text-blue-500 font-black tracking-widest">Protocol Bounty</div>
-              <div className="text-xl font-black mb-4 uppercase leading-tight">Complete MVP Feedback To Earn $100 Rewards</div>
-              <p className="mono font-normal text-zinc-500 mb-8 lowercase opacity-80">
-                we are looking for 5+ testnet users to validate our micro-lending curves.
+            <div className="technical-card p-10 bg-indigo-600/5 group">
+              <div className="flex items-center gap-3 mb-8">
+                 <AlertCircle className="w-5 h-5 text-indigo-500" />
+                 <h3 className="text-sm font-bold uppercase tracking-wider text-white">Contest Rewards</h3>
+              </div>
+              <div className="text-lg font-black text-white mb-4 uppercase leading-tight tracking-tight">Earn $100 for Validating the MVP micro-loan engine</div>
+              <p className="text-[11px] font-medium text-[#8E9299] mb-8 leading-relaxed">
+                Stakeholder feedback is critical. Complete our Level 5 survey to help us refine the reputation weighting algorithm.
               </p>
               <button 
-                className="w-full bg-white text-black py-4 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-400 transition-all transition-colors"
+                className="w-full bg-[#1E1F23] text-white py-4 rounded-lg font-bold uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all border border-[#2A2B2E]"
               >
-                Open Form
+                Launch Feedback Portal
               </button>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="border-t border-zinc-900 py-20 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-16">
-          <div className="flex flex-col gap-8">
-             <div className="flex items-center gap-3">
-               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center font-black italic text-black text-xl">
-                 S
-               </div>
-               <span className="text-4xl font-black tracking-tighter uppercase">StellarYield</span>
-             </div>
-             <div className="flex gap-16">
-               <div className="flex flex-col">
-                 <span className="mono mb-2">Contract Status</span>
-                 <span className="font-black text-sm uppercase">Soroban v1.2</span>
-               </div>
-               <div className="flex flex-col">
-                 <span className="mono mb-2">Network Feed</span>
-                 <span className="font-black text-sm uppercase tracking-tighter">Horizon v2.10</span>
-               </div>
-             </div>
+      <footer className="border-t border-[#2A2B2E] py-20 px-8 relative z-10 bg-[#0A0A0A]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
+          <div className="md:col-span-2 space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-white rounded flex items-center justify-center font-bold text-black text-lg">
+                SY
+              </div>
+              <span className="text-2xl font-black tracking-tighter text-white uppercase">StellarYield</span>
+            </div>
+            <p className="text-[#8E9299] text-sm max-w-sm leading-relaxed font-medium">
+              A high-frequency micro-lending protocol engineered for the Stellar blockchain. 
+              Enabling institutional-grade credit scoring for individual participants.
+            </p>
+            <div className="flex gap-10">
+              <div>
+                <span className="mono-label !text-[#8E9299] block mb-2">Protocol Architecture</span>
+                <span className="font-bold text-xs uppercase text-white">Soroban Smart Layer</span>
+              </div>
+              <div>
+                <span className="mono-label !text-[#8E9299] block mb-2">Oracle Integration</span>
+                <span className="font-bold text-xs uppercase text-white">Horizon API Relay</span>
+              </div>
+            </div>
           </div>
           
-          <div className="flex flex-col items-end gap-8 text-right">
-            <div className="flex gap-12 font-mono text-[10px] uppercase tracking-widest text-zinc-600">
-              <a href="#" className="hover:text-white transition-colors">Explorer</a>
-              <a href="#" className="hover:text-white transition-colors">Documentation</a>
-              <a href="#" className="hover:text-white transition-colors">GitHub</a>
-            </div>
-            <div className="mono opacity-40 lowercase"> 
-              &copy; 2026 stellaryield. on-chain intelligence protocol.
+          <div className="space-y-6">
+            <h4 className="mono-label text-white">Resources</h4>
+            <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-[#8E9299]">
+              <li><a href="#" className="hover:text-white transition-colors">Lab Documentation</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Governance Token</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Audit Reports</a></li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="mono-label text-white">Protocol Status</h4>
+            <div className="space-y-4">
+              <div className="p-4 bg-[#151619] border border-[#2A2B2E] rounded-lg">
+                <div className="mono-label !text-[8px] mb-2 opacity-50">LATEST_BLOCK</div>
+                <div className="font-mono text-[10px] text-indigo-400 font-black">#829104-B</div>
+              </div>
+              <div className="mono-label !text-[8px] opacity-40 lowercase"> 
+                &copy; 2026 stellaryield protocol lab.
+              </div>
             </div>
           </div>
         </div>

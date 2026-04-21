@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -8,47 +8,49 @@
 
 @layer base {
   body {
-    @apply antialiased text-white bg-[#050505];
+    @apply antialiased text-[#E4E3E0] bg-[#0A0A0A];
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-.hero-text {
-  font-size: clamp(3rem, 10vw, 120px);
-  line-height: 0.85;
-  letter-spacing: -0.06em;
-  font-weight: 900;
-  text-transform: uppercase;
+/* Technical Visible Grid */
+.grid-overlay {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.mono {
-  @apply font-mono text-[12px] tracking-[0.05em] uppercase opacity-60;
+.mono-label {
+  @apply font-mono text-[10px] uppercase tracking-[0.15em] text-[#8E9299];
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+.technical-card {
+  @apply bg-[#151619] border border-[#2A2B2E] rounded-xl overflow-hidden shadow-2xl;
 }
 
-.accent-glow {
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+.data-row {
+  @apply flex items-center justify-between p-4 border-b border-[#2A2B2E] transition-all duration-200 hover:bg-[#1E1F23];
+}
+
+.accent-border {
+  @apply border-l-4 border-indigo-500;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #0A0A0A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #2A2B2E;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+  background: #3A3B3E;
 }
