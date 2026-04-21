@@ -10,6 +10,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [connecting, setConnecting] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -18,9 +19,14 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
   }, []);
 
   const handleConnect = async () => {
-    const address = await connectWallet();
-    if (address) {
-      setWallet({ address, connected: true });
+    setConnecting(true);
+    try {
+      const address = await connectWallet();
+      if (address) {
+        setWallet({ address, connected: true });
+      }
+    } finally {
+      setConnecting(false);
     }
   };
 
@@ -67,8 +73,8 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
                   <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                   <span className="mono-label !text-[9px]">Live Status</span>
                 </div>
-                <span className="text-xs font-mono font-bold text-white mt-1">
-                   {wallet.address?.slice(0, 6)}...{wallet.address?.slice(-6)}
+                <span className="text-xs font-mono font-bold text-white mt-1 uppercase tracking-tighter">
+                   Identity_Verified
                 </span>
               </div>
               <button 
@@ -81,10 +87,14 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet }) => {
           ) : (
             <button 
               onClick={handleConnect}
-              className="group relative flex items-center gap-2 bg-indigo-600 px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all hover:bg-indigo-500 hover:shadow-[0_0_25px_rgba(79,70,229,0.4)] active:scale-95"
+              disabled={connecting}
+              className={cn(
+                "group relative flex items-center gap-2 bg-indigo-600 px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all shadow-[0_0_25px_rgba(79,70,229,0.4)]",
+                connecting ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-500 active:scale-95"
+              )}
             >
-              <Wallet className="w-4 h-4 transition-transform group-hover:-rotate-12" />
-              Initialize Wallet
+              <Wallet className={cn("w-4 h-4 transition-transform", connecting ? "animate-pulse" : "group-hover:-rotate-12")} />
+              {connecting ? "Initializing..." : "Initialize Wallet"}
             </button>
           )}
         </div>

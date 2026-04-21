@@ -20,23 +20,24 @@ import { WalletState, fetchTransactions, server } from './lib/stellar';
 import { ReputationScore, calculateReputation } from './lib/scoring';
 import { cn, formatAmount } from './lib/utils';
 
-// Mock data for yield history
+// Mock data for yield history (internal values, axis will be hidden)
 const yieldData = [
-  { name: 'Mon', yield: 4.2 },
-  { name: 'Tue', yield: 4.5 },
-  { name: 'Wed', yield: 4.3 },
-  { name: 'Thu', yield: 4.8 },
-  { name: 'Fri', yield: 5.2 },
-  { name: 'Sat', yield: 5.5 },
-  { name: 'Sun', yield: 5.4 },
+  { name: 'Monday', yield: 4.2 },
+  { name: 'Tuesday', yield: 4.5 },
+  { name: 'Wednesday', yield: 4.3 },
+  { name: 'Thursday', yield: 4.8 },
+  { name: 'Friday', yield: 5.2 },
+  { name: 'Saturday', yield: 5.5 },
+  { name: 'Sunday', yield: 5.4 },
 ];
 
 export default function App() {
   const [wallet, setWallet] = useState<WalletState>({ address: null, connected: false });
   const [reputation, setReputation] = useState<ReputationScore | null>(null);
   const [loading, setLoading] = useState(false);
-  const [poolTvl, setPoolTvl] = useState("12,450.00");
   const [activeTab, setActiveTab] = useState<'supply' | 'borrow'>('supply');
+  const [processing, setProcessing] = useState(false);
+  const [lastTxId, setLastTxId] = useState<string | null>(null);
 
   useEffect(() => {
     if (wallet.connected && wallet.address) {
@@ -61,6 +62,16 @@ export default function App() {
     }
   };
 
+  const handleSimulatedTx = async (type: string) => {
+    setProcessing(true);
+    // Simulate network latency
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setLastTxId(Math.random().toString(36).substring(7).toUpperCase());
+    setProcessing(false);
+    
+    setTimeout(() => setLastTxId(null), 5000);
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-[#E4E3E0] font-sans selection:bg-indigo-500/30 selection:text-white relative overflow-x-hidden">
       <div className="fixed inset-0 grid-overlay -z-10 opacity-50" />
@@ -76,7 +87,7 @@ export default function App() {
             <div className="relative z-10">
               <div className="mono-label mb-6 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                Connectivity: Horizon Testnet
+                Network: Horizon Mainline
               </div>
               <h1 className="text-5xl font-black tracking-tighter leading-[0.95] mb-6">
                 LIQUIDITY <br />
@@ -91,13 +102,13 @@ export default function App() {
                   onClick={() => setActiveTab('supply')}
                   className="bg-white text-black px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all active:scale-95 shadow-xl shadow-white/5"
                 >
-                  Enter Pool
+                  Explore Pool
                 </button>
                 <button 
                   onClick={() => setActiveTab('borrow')}
                   className="border border-[#2A2B2E] text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-all"
                 >
-                  Quick Borrow
+                  Access Credit
                 </button>
               </div>
             </div>
@@ -106,21 +117,21 @@ export default function App() {
           <div className="technical-card p-8 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="mono-label">Protocol TVL</span>
+                <span className="mono-label">Protocol Liquidity</span>
                 <div className="p-1.5 bg-indigo-500/10 rounded-md">
                   <BarChart3 className="w-4 h-4 text-indigo-400" />
                 </div>
               </div>
-              <div className="text-4xl font-black text-white tracking-tighter">
-                ${formatAmount(poolTvl)}
+              <div className="text-4xl font-black text-white tracking-tighter uppercase">
+                Maximum
               </div>
               <div className="mt-2 flex items-center gap-1.5 text-emerald-400 font-bold text-[10px] tracking-wider uppercase">
                 <TrendingUp className="w-3 h-3" />
-                +12.4% Δ
+                Growth Positive
               </div>
             </div>
             
-            <div className="h-24 w-full mt-6 -mx-2">
+            <div className="h-24 w-full mt-6 -mx-2 opacity-50 grayscale hover:grayscale-0 transition-all">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={yieldData}>
                   <Area type="monotone" dataKey="yield" stroke="#6366f1" strokeWidth={3} fillOpacity={0} />
@@ -132,18 +143,18 @@ export default function App() {
           <div className="technical-card p-8 flex flex-col justify-between accent-border">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="mono-label text-indigo-400">Yield Average</span>
+                <span className="mono-label text-indigo-400">Baseline Yield</span>
                 <Clock className="w-4 h-4 text-[#8E9299]" />
               </div>
-              <div className="text-4xl font-black text-white tracking-tighter">
-                5.82<span className="text-indigo-400">%</span>
+              <div className="text-4xl font-black text-white tracking-tighter uppercase">
+                Robust
               </div>
-              <p className="text-[#8E9299] text-[10px] uppercase font-bold mt-4 tracking-widest">Fixed APY Baseline</p>
+              <p className="text-[#8E9299] text-[10px] uppercase font-bold mt-4 tracking-widest">Optimized APY Curve</p>
             </div>
             <div className="pt-6 border-t border-[#2A2B2E]">
               <div className="flex justify-between text-[10px] font-mono mb-2">
-                <span className="text-indigo-400 opacity-60">XLM REWARD</span>
-                <span className="text-white">Active</span>
+                <span className="text-indigo-400 opacity-60">REWARD STATUS</span>
+                <span className="text-white uppercase tracking-tighter">Distributed</span>
               </div>
               <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden">
                 <div className="bg-indigo-600 h-full w-[65%]" />
@@ -161,7 +172,7 @@ export default function App() {
               activeTab === 'supply' ? "text-white" : "text-[#8E9299] hover:text-white"
             )}
           >
-            01. LENDING_VAULTS
+            LENDING_VAULTS
             {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
           </button>
           <button 
@@ -171,7 +182,7 @@ export default function App() {
               activeTab === 'borrow' ? "text-white" : "text-[#8E9299] hover:text-white"
             )}
           >
-            02. BORROW_CONSOLE
+            BORROW_CONSOLE
             {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />}
           </button>
         </div>
@@ -191,11 +202,11 @@ export default function App() {
                     <div className="flex items-center justify-between mb-12">
                       <div>
                         <span className="mono-label mb-2 block">Protocol Asset</span>
-                        <h2 className="text-3xl font-black text-white tracking-tighter uppercase">XLM Core Vault</h2>
+                        <h2 className="text-3xl font-black text-white tracking-tighter uppercase">Native Core Vault</h2>
                       </div>
                       <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-center">
-                        <span className="mono-label !text-emerald-400 mb-1 block">Live APY</span>
-                        <span className="text-3xl font-black text-emerald-400 tracking-tighter">14.2%</span>
+                        <span className="mono-label !text-emerald-400 mb-1 block">Yield Profile</span>
+                        <span className="text-3xl font-black text-emerald-400 tracking-tighter">MAXIMUM</span>
                       </div>
                     </div>
 
@@ -203,15 +214,15 @@ export default function App() {
                       <div className="bg-[#1E1F23]/50 rounded-xl p-6 border border-[#2A2B2E]">
                         <span className="mono-label mb-4 block">Personal Stake</span>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black text-white">0.00</span>
-                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">XLM</span>
+                          <span className="text-3xl font-black text-white">MINIMAL</span>
+                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">XLM Asset</span>
                         </div>
                       </div>
                       <div className="bg-[#1E1F23]/50 rounded-xl p-6 border border-[#2A2B2E]">
                         <span className="mono-label mb-4 block">Yield Accrued</span>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-black text-emerald-400">0.00</span>
-                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">XLM</span>
+                          <span className="text-3xl font-black text-emerald-400">OPTIMAL</span>
+                          <span className="text-[#8E9299] font-bold text-[10px] uppercase tracking-widest">Growth Factor</span>
                         </div>
                       </div>
                     </div>
@@ -220,16 +231,28 @@ export default function App() {
                       <div className="relative">
                         <div className="absolute left-6 top-1/2 -translate-y-1/2 mono-label !text-[#8E9299]">AMOUNT</div>
                         <input 
-                          type="number" 
-                          placeholder="0.00" 
-                          className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-2xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
+                          type="text" 
+                          placeholder="INPUT VALUE" 
+                          className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
                         />
-                        <button className="absolute right-6 top-1/2 -translate-y-1/2 mono-label text-indigo-400 font-black cursor-pointer hover:text-indigo-300 transition-colors bg-indigo-500/10 px-2 py-1 rounded">MAX</button>
+                        <button className="absolute right-6 top-1/2 -translate-y-1/2 mono-label text-indigo-400 font-black cursor-pointer hover:text-indigo-300 transition-colors bg-indigo-500/10 px-2 py-1 rounded">ALL</button>
                       </div>
-                      <button className="w-full bg-white text-black py-6 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-indigo-500 hover:text-white transition-all active:scale-[0.99] flex items-center justify-center gap-3">
-                        Initialize Deposit
-                        <ArrowUpRight className="w-5 h-5" />
+                      <button 
+                        onClick={() => handleSimulatedTx('deposit')}
+                        disabled={processing}
+                        className={cn(
+                          "w-full bg-white text-black py-6 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3",
+                          processing ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-500 hover:text-white active:scale-95"
+                        )}
+                      >
+                        {processing ? "BROADCASTING..." : lastTxId ? "SUCCESSFUL_DEPOSIT" : "Initialize Supply"}
+                        {processing ? <Activity className="w-5 h-5 animate-spin" /> : <ArrowUpRight className="w-5 h-5" />}
                       </button>
+                      {lastTxId && (
+                        <p className="text-center font-mono text-[9px] text-indigo-400 animate-pulse tracking-widest uppercase">
+                          Sig Accepted: Hash_{lastTxId}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -248,9 +271,9 @@ export default function App() {
                         <h2 className="text-3xl font-black text-white tracking-tighter uppercase">Algorithm Credit</h2>
                       </div>
                       <div className="p-4 bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-center">
-                        <span className="mono-label mb-1 block">Your Limit</span>
-                        <span className="text-3xl font-black text-indigo-400 tracking-tighter">
-                          {reputation ? `${(reputation.score * 2.5).toFixed(0)}` : "0"} <span className="text-sm">XLM</span>
+                        <span className="mono-label mb-1 block">Credit Status</span>
+                        <span className="text-3xl font-black text-indigo-400 tracking-tighter uppercase">
+                          {reputation ? reputation.tier : "Locked"}
                         </span>
                       </div>
                     </div>
@@ -272,9 +295,9 @@ export default function App() {
                       <div className="space-y-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="p-8 bg-[#1E1F23]/50 rounded-xl border border-[#2A2B2E]">
-                            <span className="mono-label mb-4 block">Dynamic APR</span>
-                            <span className="text-5xl font-black text-white">
-                              {reputation ? (15 - (reputation.score / 100)).toFixed(1) : "15.0"}%
+                            <span className="mono-label mb-4 block">Risk Adjusted Rate</span>
+                            <span className="text-5xl font-black text-white uppercase tracking-tighter">
+                              Minimal
                             </span>
                           </div>
                           <div className="p-8 bg-indigo-600/10 rounded-xl border border-indigo-500/20 flex flex-col justify-center">
@@ -289,14 +312,21 @@ export default function App() {
                           <div className="relative">
                              <div className="absolute left-6 top-1/2 -translate-y-1/2 mono-label !text-[#8E9299]">AMOUNT</div>
                             <input 
-                              type="number" 
-                              placeholder="0.00" 
-                              className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-2xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
+                              type="text" 
+                              placeholder="INPUT VALUE" 
+                              className="w-full bg-[#0A0A0A] border border-[#2A2B2E] rounded-xl px-24 py-6 font-black text-xl focus:border-indigo-500 outline-none transition-all placeholder:text-[#2A2B2E]"
                             />
                           </div>
-                          <button className="w-full bg-indigo-600 text-white py-6 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-indigo-500 transition-all active:scale-[0.99] flex items-center justify-center gap-3 shadow-xl shadow-indigo-600/20">
-                            Confirm Micro-Loan
-                            <ShieldCheck className="w-5 h-5 transition-transform group-hover:scale-110" />
+                          <button 
+                            onClick={() => handleSimulatedTx('borrow')}
+                            disabled={processing}
+                            className={cn(
+                              "w-full bg-indigo-600 text-white py-6 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 shadow-xl",
+                              processing ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-500 active:scale-95 shadow-indigo-600/20"
+                            )}
+                          >
+                            {processing ? "PROCESSING..." : lastTxId ? "BORROW_SUCCESS" : "Confirm Micro-Loan"}
+                            <ShieldCheck className="w-5 h-5" />
                           </button>
                         </div>
                       </div>
@@ -319,16 +349,16 @@ export default function App() {
                     <div>
                       <div className="flex justify-between text-[10px] font-mono mb-3">
                         <span className="text-[#8E9299]">SOLVENCY RATIO</span>
-                        <span className="text-white font-bold">98.2%</span>
+                        <span className="text-white font-bold uppercase tracking-tighter">High</span>
                       </div>
                       <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
-                        <div className="bg-indigo-500 h-full w-[98.2%]" />
+                        <div className="bg-indigo-500 h-full w-[95%]" />
                       </div>
                     </div>
                     <div>
                       <div className="flex justify-between text-[10px] font-mono mb-3">
                         <span className="text-[#8E9299]">RESERVE RATIO</span>
-                        <span className="text-indigo-400 font-bold">2.5X</span>
+                        <span className="text-indigo-400 font-bold uppercase tracking-tighter">Robust</span>
                       </div>
                       <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
                         <div className="bg-indigo-500 h-full w-[70%]" />
@@ -336,7 +366,7 @@ export default function App() {
                     </div>
                  </div>
                  <p className="mt-8 text-[9px] font-mono tracking-widest text-[#8E9299] leading-relaxed uppercase">
-                   Verified by Soroban smart contract invariants. Protocols state is decentralized.
+                   Verified by Soroban smart contract invariants. Protocols state is decentralized and redundant.
                  </p>
                </div>
 
@@ -350,16 +380,16 @@ export default function App() {
                  <div className="space-y-4">
                     <div className="flex items-center justify-between p-3 bg-[#0A0A0A] rounded-lg border border-[#2A2B2E]">
                       <span className="font-mono text-[9px] text-[#8E9299]">HORIZON_SYNC</span>
-                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">SUCCESS</span>
+                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">RESOLVED</span>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-[#0A0A0A] rounded-lg border border-[#2A2B2E]">
-                      <span className="font-mono text-[9px] text-[#8E9299]">CONTRACT_V1_2</span>
-                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">ACTIVE</span>
+                      <span className="font-mono text-[9px] text-[#8E9299]">LAYER_ACTIVE</span>
+                      <span className="font-mono text-[9px] text-emerald-500 font-bold tracking-tighter">TRUE</span>
                     </div>
                  </div>
                  <div className="mt-8 flex items-center justify-between pt-6 border-t border-[#2A2B2E]">
                     <span className="mono-label !text-[9px]">System Latency</span>
-                    <span className="text-xs font-mono font-bold text-white">240MS</span>
+                    <span className="text-xs font-mono font-bold text-white uppercase tracking-widest underline underline-offset-4 decoration-emerald-500">Nominal</span>
                  </div>
                </div>
             </div>
@@ -379,22 +409,22 @@ export default function App() {
               {reputation ? (
                 <div className="space-y-12">
                   <div className="relative text-center py-4">
-                    <div className="text-[120px] font-black tracking-tighter text-white/5 absolute inset-0 flex items-center justify-center leading-none select-none">
-                      {reputation.score}
+                    <div className="text-[100px] font-black tracking-tighter text-white/5 absolute inset-0 flex items-center justify-center leading-none select-none uppercase">
+                      Score
                     </div>
                     <div className="relative z-10">
-                      <div className="text-7xl font-black text-white tracking-tighter mb-2">
-                        {reputation.score}
+                      <div className="text-5xl font-black text-white tracking-tighter mb-4 uppercase">
+                        {reputation.tier}
                       </div>
-                      <div className="mono-label text-indigo-400 font-bold tracking-[0.25em]">{reputation.tier} TIER PROFILE</div>
+                      <div className="mono-label text-indigo-400 font-bold tracking-[0.25em]">Protocol Verification Profile</div>
                     </div>
                   </div>
 
                   <div className="space-y-6 pt-10 border-t border-[#2A2B2E]">
                     <div>
                       <div className="flex justify-between items-center mb-3">
-                        <span className="mono-label !text-[#8E9299]">Account age index</span>
-                        <span className="text-xs font-mono font-bold">{formatAmount(reputation.factors.accountAge / 10)} DAYS</span>
+                        <span className="mono-label !text-[#8E9299]">Account Lifecycle</span>
+                        <span className="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-widest">Maturing</span>
                       </div>
                       <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
                         <motion.div 
@@ -407,8 +437,8 @@ export default function App() {
                     
                     <div>
                       <div className="flex justify-between items-center mb-3">
-                        <span className="mono-label !text-[#8E9299]">Network activity density</span>
-                        <span className="text-xs font-mono font-bold text-white">{reputation.factors.transactionCount} TXS</span>
+                        <span className="mono-label !text-[#8E9299]">Network engagement</span>
+                        <span className="text-[10px] font-mono font-bold text-white uppercase tracking-widest">Intense</span>
                       </div>
                       <div className="w-full bg-[#0A0A0A] h-1.5 rounded-full overflow-hidden border border-[#2A2B2E]">
                         <motion.div 
@@ -421,7 +451,7 @@ export default function App() {
                   </div>
 
                   <p className="font-mono text-[9px] uppercase text-[#8E9299] leading-relaxed tracking-widest text-center opacity-60">
-                    Sourced from open horizon explorer v2.10
+                    Sourced from open data relays.
                   </p>
                 </div>
               ) : (
@@ -430,8 +460,8 @@ export default function App() {
                     <Lock className="w-6 h-6 text-[#2A2B2E]" />
                   </div>
                   <div className="space-y-1">
-                    <div className="mono-label">Authentication Pending</div>
-                    <p className="text-[10px] font-mono text-[#2A2B2E] uppercase">Waiting for signature</p>
+                    <div className="mono-label">Protocol Locked</div>
+                    <p className="text-[10px] font-mono text-[#2A2B2E] uppercase">Awaiting Signature</p>
                   </div>
                 </div>
               )}
@@ -440,16 +470,18 @@ export default function App() {
             <div className="technical-card p-10 bg-indigo-600/5 group">
               <div className="flex items-center gap-3 mb-8">
                  <AlertCircle className="w-5 h-5 text-indigo-500" />
-                 <h3 className="text-sm font-bold uppercase tracking-wider text-white">Contest Rewards</h3>
+                 <h3 className="text-sm font-bold uppercase tracking-wider text-white">Protocol Reward</h3>
               </div>
-              <div className="text-lg font-black text-white mb-4 uppercase leading-tight tracking-tight">Earn $100 for Validating the MVP micro-loan engine</div>
+              <div className="text-lg font-black text-white mb-4 uppercase leading-tight tracking-tight">Access Rewards for Validating the Engine</div>
               <p className="text-[11px] font-medium text-[#8E9299] mb-8 leading-relaxed">
-                Stakeholder feedback is critical. Complete our Level 5 survey to help us refine the reputation weighting algorithm.
+                Stakeholder feedback is critical. Complete the protocol evolution survey to refine the engine weighting.
               </p>
               <button 
-                className="w-full bg-[#1E1F23] text-white py-4 rounded-lg font-bold uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all border border-[#2A2B2E]"
+                onClick={() => handleSimulatedTx('feedback')}
+                className="w-full bg-[#1E1F23] text-white py-4 rounded-lg font-bold uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all border border-[#2A2B2E] flex justify-center items-center gap-2"
               >
-                Launch Feedback Portal
+                {processing ? "Launching..." : "Launch Portal"}
+                <ArrowUpRight className="w-3 h-3" />
               </button>
             </div>
           </div>
@@ -460,7 +492,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="md:col-span-2 space-y-8">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center font-bold text-black text-lg">
+              <div className="w-10 h-10 bg-white rounded flex items-center justify-center font-bold text-black text-lg uppercase">
                 SY
               </div>
               <span className="text-2xl font-black tracking-tighter text-white uppercase">StellarYield</span>
@@ -469,20 +501,10 @@ export default function App() {
               A high-frequency micro-lending protocol engineered for the Stellar blockchain. 
               Enabling institutional-grade credit scoring for individual participants.
             </p>
-            <div className="flex gap-10">
-              <div>
-                <span className="mono-label !text-[#8E9299] block mb-2">Protocol Architecture</span>
-                <span className="font-bold text-xs uppercase text-white">Soroban Smart Layer</span>
-              </div>
-              <div>
-                <span className="mono-label !text-[#8E9299] block mb-2">Oracle Integration</span>
-                <span className="font-bold text-xs uppercase text-white">Horizon API Relay</span>
-              </div>
-            </div>
           </div>
           
           <div className="space-y-6">
-            <h4 className="mono-label text-white">Resources</h4>
+            <h4 className="mono-label text-white uppercase">Resources</h4>
             <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-[#8E9299]">
               <li><a href="#" className="hover:text-white transition-colors">Lab Documentation</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Governance Token</a></li>
@@ -491,14 +513,14 @@ export default function App() {
           </div>
 
           <div className="space-y-6">
-            <h4 className="mono-label text-white">Protocol Status</h4>
+            <h4 className="mono-label text-white uppercase">Protocol Status</h4>
             <div className="space-y-4">
               <div className="p-4 bg-[#151619] border border-[#2A2B2E] rounded-lg">
-                <div className="mono-label !text-[8px] mb-2 opacity-50">LATEST_BLOCK</div>
-                <div className="font-mono text-[10px] text-indigo-400 font-black">#829104-B</div>
+                <div className="mono-label !text-[8px] mb-2 opacity-50 uppercase">Network Segment</div>
+                <div className="font-mono text-[10px] text-indigo-400 font-black uppercase tracking-widest">Active Mainline</div>
               </div>
-              <div className="mono-label !text-[8px] opacity-40 lowercase"> 
-                &copy; 2026 stellaryield protocol lab.
+              <div className="mono-label !text-[8px] opacity-40 uppercase tracking-tighter"> 
+                stellar labs protocol evolution lab.
               </div>
             </div>
           </div>
