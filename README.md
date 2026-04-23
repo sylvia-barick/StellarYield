@@ -5,21 +5,21 @@
 ---
 
 ## 🚀 The Vision: "Antigravity" Lending
-In traditional finance, everyone pays the same high rate. In StellarYield, your **Stellar Trust Score** acts as your financial identity. The better your history, the lower your interest rate.
+In traditional finance, everyone pays the same high rate regardless of loyalty. In StellarYield, your **Stellar Trust Score** acts as your financial identity. The better your history, the lower your interest rate.
 
 ### 🧠 The Reputation Engine
 We use the **Stellar Horizon API** to analyze:
-1. **Account Age:** Loyalty to the network.
-2. **Network Activity:** Total transaction count.
-These factors combine into a **Trust Score (0-100)**.
+1. **Account Age:** Loyalty and long-term commitment to the network.
+2. **Network Activity:** Total transaction count and engagement level.
+These factors combine into a dynamic **Trust Score (0-100)**.
 
 ---
 
 ## 📐 Economic Model (The Formula)
-We use a Linear Scaling Formula to ensure transparency. Every user sees exactly why they are paying their specific rate.
+We use a Linear Scaling Formula to ensure absolute transparency. Every user can verify exactly why they are paying their specific rate.
 
 **The Equation:**
-> **Personalized Interest Rate** = `Base Rate (15%)` - (`Trust Score` / 100 × `Max Reputation Discount (10%)`)
+$$Personalized\ Interest\ Rate = Base\ Rate\ (15\%) - \left( \frac{Trust\ Score}{100} \times Max\ Reputation\ Discount\ (10\%) \right)$$
 
 ### Example Scenarios:
 | User Type | Trust Score | Calculation | Final APR |
@@ -30,10 +30,30 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 
 ---
 
+## 👥 User Validation & Onboarding
+To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liquidity lifecycle and "Antigravity" interest scaling.
+
+- **User Feedback Data (Excel):** [View Spreadsheet of Responses](https://docs.google.com/spreadsheets/d/1_pxFn-fNdMikKCbjyV5wrrjBzYCOKOajp6D3dPO1CCY/edit?usp=sharing)
+- **Verified Testnet Users:**
+  1. Debdeepa Dutta
+  2. Diptomoy Das
+  3. Debojyoti De Majumder
+  4. Sriz Debnath
+  5. Rohan Kumar
+  6. Tanmay Chakraborty
+
+---
+
+## 🔄 User Feedback & Iterations
+During the testing phase, users noted that the transaction process felt "opaque" during the 5-second ledger closing window. 
+
+- **The Issue:** Lack of visual confirmation for contract calls led to user confusion.
+- **The Solution:** Implemented a real-time **Event Log** and **Transaction Status Tracker** to provide immediate human-readable feedback.
+- **Proof of Iteration:** [View Git Commit: Refactor UI for improved aesthetics and performance](https://github.com/sylvia-barick/StellarYield/commit/b153c7b)
+
+---
+
 ## 🏗️ Technical Architecture
-
-
-
 1. **Frontend:** Next.js & Framer Motion (for smooth "Antigravity" UI animations).
 2. **Smart Contract:** Soroban (Rust) handling the **Stellar Asset Contract (SAC)** for real XLM transfers.
 3. **Data Layer:** Horizon API for real-time identity verification.
@@ -42,9 +62,6 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 ---
 
 ## 🌊 System Flowchart
-
-
-
 1. **CONNECT:** User links Freighter wallet.
 2. **SCAN:** Reputation Engine pings Horizon API to calculate Trust Score.
 3. **SUPPLY:** User deposits XLM into the Native Core Vault.
@@ -62,18 +79,17 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 
 ### 2. Supplying Liquidity (Lending)
 * Enter an amount in the **Input Value** box (e.g., 25 XLM).
-* Click **Initialize Supply**. 
-* Approve the Freighter popup. Your XLM is now in the Vault!
+* Click **Initialize Supply** and approve the Freighter popup. Your XLM is now earning yield in the Vault!
 
 ### 3. Borrowing
 * Navigate to the **Borrow Console**.
-* See your **Personalized APR** (6% if your score is 90).
+* View your **Personalized APR** (e.g., 6% if your score is 90).
 * Enter the amount you need and click **Borrow**.
 
 ### 4. Repaying (Repayment Center)
-* Go to the **Repayment Center** (formerly Governance).
+* Go to the **Repayment Center**.
 * View your "Total to Return" (Principal + Accrued Interest).
-* Click **Clear Debt** to finalize the transaction and free up your credit line.
+* Click **Clear Debt** to finalize the transaction and restore your credit line.
 
 ---
 
@@ -85,3 +101,7 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 
 ---
 
+## 🔮 Future Evolution
+1. **Multi-Asset Support:** Integrating USDC and EURC stablecoins to provide non-volatile lending options.
+2. **Dynamic Rates:** Transitioning to an algorithmic model where interest rates adjust based on vault utilization.
+3. **Advanced Identity:** Incorporating Soroban contract interaction history into the Trust Score for higher precision.
