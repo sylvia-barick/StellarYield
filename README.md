@@ -1,59 +1,95 @@
-# 🚀 StellarYield: Institutional-Grade Micro-Lending
+# 🌌 StellarYield: Antigravity Micro-Lending Protocol
 
-StellarYield is a high-frequency decentralized micro-lending and yield protocol built natively on the Stellar Network. It leverages on-chain transaction history to compute a real-time **Reputation Score**, enabling collateral-efficient financing without traditional KYC.
-
----
-
-## 🔗 Level 5 Submission Dashboard
-
-| Requirement | Artifact / Link |
-| :--- | :--- |
-| **Live Demo** | [Launch StellarYield MVP](https://stellaryield.vercel.app) *(Example Placeholder)* |
-| **Demo Video** | [Watch Protocol Walkthrough](https://youtube.com/placeholder) |
-| **Architecture** | [Technical Architecture Doc](./ARCHITECTURE.md) |
-| **User Feedback** | [Feedback Analysis (Iteration 1)](./FEEDBACK.md) |
-| **Onboarding Form** | [StellarYield Google Form](https://forms.gle/placeholder) |
-| **Excel Export** | [Feedback Analytics (Spreadsheet)](https://docs.google.com/spreadsheets/placeholder) |
+**StellarYield** is a decentralized, reputation-based lending platform built on the **Stellar Network** using **Soroban Smart Contracts**. It solves the problem of high collateral in DeFi by using a user's on-chain history to lower interest rates—defying the "gravity" of traditional high-interest debt.
 
 ---
 
-## 👥 Verified Testnet Participants (MVP Validation)
+## 🚀 The Vision: "Antigravity" Lending
+In traditional finance, everyone pays the same high rate. In StellarYield, your **Stellar Trust Score** acts as your financial identity. The better your history, the lower your interest rate.
 
-The following addresses have executed transactions against the StellarYield protocol on the **Stellar Testnet** for user validation:
-
-1. **GBZ...H2J**: [View Interaction](https://stellar.expert/explorer/testnet/tx/placeholder) — *Yield Supply Operation*
-2. **GD6...9L1**: [View Interaction](https://stellar.expert/explorer/testnet/tx/placeholder) — *Micro-Loan Creation*
-3. **GA7...P0K**: [View Interaction](https://stellar.expert/explorer/testnet/tx/placeholder) — *Identity Computation*
-4. **GCL...Q3M**: [View Interaction](https://stellar.expert/explorer/testnet/tx/placeholder) — *Liquidity Withdrawal*
-5. **GEV...Z89**: [View Interaction](https://stellar.expert/explorer/testnet/tx/placeholder) — *Governance Parameter Proposal*
-
----
-
-## 📊 Iteration & Improvement Plan
-
-### Iteration 1: Algorithm Refinement
-- **Feedback:** Users requested more transparency on the dynamic interest rate calculation.
-- **Action:** Implemented a visual "Reputation Engine" detail view in the dashboard (see `App.tsx`) providing raw factor breakdown.
-- **Commit:** [feat: enhance reputation weighting and visualization (sha: 9d4e2f1)](https://github.com/placeholder/commit/hash)
-
-### Roadmap & Evolution
-- **Next Phase:** Integration of **Soroban Smart Contracts** for fully automated lender-participation logic.
-- **Expansion:** Implementation of **SEP-24** anchor integration for direct fiat-to-yield ramps.
-- **Governance:** Migration to a DAO-controlled multi-sig for protocol safety parameters.
+### 🧠 The Reputation Engine
+We use the **Stellar Horizon API** to analyze:
+1. **Account Age:** Loyalty to the network.
+2. **Network Activity:** Total transaction count.
+These factors combine into a **Trust Score (0-100)**.
 
 ---
 
-## 🛠️ Technical Implementation
-- **Core Engine:** React 19 + Vite + TypeScript.
-- **Blockchain Connectivity:** `stellar-sdk` & `@stellar/freighter-api`.
-- **UI Architecture:** Tailored "Technical Dashboard" styling with Tailwind CSS and Framer Motion.
-- **Data Visualization:** `recharts` for historical yield trajectories.
+## 📐 Economic Model (The Formula)
+We use a Linear Scaling Formula to ensure transparency. Every user sees exactly why they are paying their specific rate.
 
-## 🏗️ Local Development
-1. **Prerequisites:** Freighter Wallet (configured to Testnet).
-2. **Installation:** `npm install`
-3. **Execution:** `npm run dev`
-4. **Validation:** Connect Freighter to initialize the on-chain reputation engine.
+**The Equation:**
+> **Personalized Interest Rate** = `Base Rate (15%)` - (`Trust Score` / 100 × `Max Reputation Discount (10%)`)
+
+### Example Scenarios:
+| User Type | Trust Score | Calculation | Final APR |
+| :--- | :--- | :--- | :--- |
+| **New Account** | 0 | 15% - (0 × 10%) | **15% (Base Rate)** |
+| **Active Developer** | 90 | 15% - (0.9 × 10%) | **6% (Elite Rate)** |
+| **Stellar Whale** | 100 | 15% - (1.0 × 10%) | **5% (Minimum Floor)** |
 
 ---
-*Submitted for the Stellar Milestone Review - Level 5 Achievement.*
+
+## 🏗️ Technical Architecture
+
+
+
+1. **Frontend:** Next.js & Framer Motion (for smooth "Antigravity" UI animations).
+2. **Smart Contract:** Soroban (Rust) handling the **Stellar Asset Contract (SAC)** for real XLM transfers.
+3. **Data Layer:** Horizon API for real-time identity verification.
+4. **Wallet:** Integration with **Freighter** for secure transaction signing.
+
+---
+
+## 🌊 System Flowchart
+
+
+
+1. **CONNECT:** User links Freighter wallet.
+2. **SCAN:** Reputation Engine pings Horizon API to calculate Trust Score.
+3. **SUPPLY:** User deposits XLM into the Native Core Vault.
+4. **BORROW:** User takes a loan at a personalized rate.
+5. **REPAY:** User clears debt in the Repayment Center to maintain their score.
+
+---
+
+## 🛠️ How to Use This Website
+
+### 1. Initialize Your Identity
+* Open the website and click **Connect Wallet**.
+* Ensure you are on the **Stellar Testnet**.
+* Watch your **Trust Score** animate based on your actual account history.
+
+### 2. Supplying Liquidity (Lending)
+* Enter an amount in the **Input Value** box (e.g., 25 XLM).
+* Click **Initialize Supply**. 
+* Approve the Freighter popup. Your XLM is now in the Vault!
+
+### 3. Borrowing
+* Navigate to the **Borrow Console**.
+* See your **Personalized APR** (6% if your score is 90).
+* Enter the amount you need and click **Borrow**.
+
+### 4. Repaying (Repayment Center)
+* Go to the **Repayment Center** (formerly Governance).
+* View your "Total to Return" (Principal + Accrued Interest).
+* Click **Clear Debt** to finalize the transaction and free up your credit line.
+
+---
+
+## 🔑 Key Technical Details
+- **Contract ID:** `CBVOHUCBRKE6DY7W4M7BIQU7CDKOXYG7ZGREEXL2AHFFSA7JETZFD6RB`
+- **Network:** Stellar Testnet
+- **Token:** Native XLM (SAC)
+- **Precision:** 7 Decimal places (Stroops)
+
+---
+
+## 👥 Meet the Team
+- **Sylvia Barick:** Full-Stack & AI/ML Engineer
+- **Debdeepa Dutta:** Frontend & UI/UX Contributor
+- **Teammates:** Debojyoti De Majumder, Avipsa Ganguly
+
+---
+
+*This project was developed for the Stellar Level 5 Achievement and the Antigravity Global Hackathon.*
