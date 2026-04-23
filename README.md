@@ -18,7 +18,7 @@ In traditional finance, everyone pays the same high rate regardless of loyalty. 
 ---
 
 ## 🔌 Project Links & Verification
-- ** Video Demonstraction: ** 
+- ** Video Demonstraction: ** [Demo video](https://youtu.be/GPmrRI8RiSo?si=9-Ih2V02ixWXX4RD)
 - ** Live MVP Demo:** [stellar-yield-rose.vercel.app](https://stellar-yield-rose.vercel.app/)
 - ** On-Chain Verification (Stellar Expert):** [Contract ID Explorer](https://stellar.expert/explorer/testnet/contract/CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL)
 - ** GitHub Repository:** [github.com/sylvia-barick/StellarYield](https://github.com/sylvia-barick/StellarYield)
