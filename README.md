@@ -34,9 +34,9 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 
 - **User Feedback Data (Excel):** [View Spreadsheet of Responses](https://docs.google.com/spreadsheets/d/1_pxFn-fNdMikKCbjyV5wrrjBzYCOKOajp6D3dPO1CCY/edit?usp=sharing)
 - **Verified Testnet Users:**
-  1. Debdeepa Dutta
-  2. Diptomoy Das
-  3. Debojyoti De Majumder
+  1. Debojyoti De Majumder
+  2. Debdeepa Dutta
+  3. Diptomoy Das
   4. Sriz Debnath
   5. Rohan Kumar
   6. Tanmay Chakraborty
