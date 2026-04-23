@@ -85,11 +85,3 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 
 ---
 
-## 👥 Meet the Team
-- **Sylvia Barick:** Full-Stack & AI/ML Engineer
-- **Debdeepa Dutta:** Frontend & UI/UX Contributor
-- **Teammates:** Debojyoti De Majumder, Avipsa Ganguly
-
----
-
-*This project was developed for the Stellar Level 5 Achievement and the Antigravity Global Hackathon.*
