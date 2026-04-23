@@ -52,12 +52,12 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 
 - **User Feedback Data (Excel):** [View Spreadsheet of Responses](https://docs.google.com/spreadsheets/d/1_pxFn-fNdMikKCbjyV5wrrjBzYCOKOajp6D3dPO1CCY/edit?usp=sharing)
 - **Verified Testnet Users:**
-  1. Debojyoti De Majumder
-  2. Debdeepa Dutta
-  3. Diptomoy Das
-  4. Sriz Debnath
-  5. Rohan Kumar
-  6. Tanmay Chakraborty
+  1. Debojyoti De Majumder [GC4H63C77AZ4URQKZ7FPWI2JRP4JVRM6OQ2QVNNTU5CO3GF7SAAMQ5L2]
+  2. Debdeepa Dutta [GAB7YLJODGSDGQZLOZTNMH2F4OAJ2UTPMTICBRLPAB4DC2OKWAAC65FH]
+  3. Diptomoy Das [GCZKPRMN44P3FKEEZMOYCMRWB6KRWJCW6GMSO4MH34DK2CWR4TDK66CI]
+  4. Sriz Debnath [GBTVSNJJSKKKSMMSMMSNSNNNNNSNSVVSNMSM]
+  5. Rohan Kumar [GBYOEY63WVKXY5KTSQZG4FGCDYY2CV7K3SH4ZSVN6IFDWJ464HPFIEIQ]
+  6. Tanmay Chakraborty [GCVBGPRU7YSL7NTK4WQ5SRGE4RC5CV7KNYBVJLNPKMMOUQRFPGRZRF2R]
 
 ---
 ## 🛡️ On-Chain Proof
