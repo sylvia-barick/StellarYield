@@ -44,15 +44,6 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 
 ---
 
-## 🔄 User Feedback & Iterations
-During the testing phase, users noted that the transaction process felt "opaque" during the 5-second ledger closing window. 
-
-- **The Issue:** Lack of visual confirmation for contract calls led to user confusion.
-- **The Solution:** Implemented a real-time **Event Log** and **Transaction Status Tracker** to provide immediate human-readable feedback.
-- **Proof of Iteration:** [View Git Commit: Refactor UI for improved aesthetics and performance](https://github.com/sylvia-barick/StellarYield/commit/b153c7b)
-
----
-
 ## 🏗️ Technical Architecture
 1. **Frontend:** Next.js & Framer Motion (for smooth "Antigravity" UI animations).
 2. **Smart Contract:** Soroban (Rust) handling the **Stellar Asset Contract (SAC)** for real XLM transfers.
