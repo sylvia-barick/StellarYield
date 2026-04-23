@@ -29,6 +29,36 @@ $$Personalized\ Interest\ Rate = Base\ Rate\ (15\%) - \left( \frac{Trust\ Score}
 | **Stellar Whale** | 100 | 15% - (1.0 × 10%) | **5% (Minimum Floor)** |
 
 ---
+## 🏗️ Technical Architecture
+
+## 🏗️ Technical Architecture
+
+```mermaid
+graph TD
+    subgraph Client_Side [Frontend - Next.js]
+        UI[Framer Motion UI]
+        Fr[Freighter Wallet]
+    end
+
+    subgraph Logic_Layer [Middleware]
+        HA[Horizon API - Trust Scoring]
+        SD[Soroban SDK - Transaction Building]
+    end
+
+    subgraph On_Chain [Stellar Blockchain]
+        SC[StellarYield Soroban Contract]
+        VA[Native Vault - XLM SAC]
+        LD[Ledger - Transaction History]
+    end
+
+    UI --> Fr
+    Fr --> SD
+    SD --> SC
+    SC --> VA
+    HA -- Scans --> LD
+    LD -- Feeds --> HA
+    HA -- Calculates Score --> UI
+--
 
 ## 👥 User Validation & Onboarding
 To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liquidity lifecycle and "Antigravity" interest scaling.
