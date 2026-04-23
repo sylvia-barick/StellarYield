@@ -4,11 +4,11 @@
 ![Soroban](https://img.shields.io/badge/Smart%20Contracts-Soroban-orange)
 ![Status](https://img.shields.io/badge/Status-Testnet-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+**StellarYield** is a decentralized, reputation-based lending platform built on the **Stellar Network** using **Soroban Smart Contracts**. It solves the problem of high collateral in DeFi by using a user's on-chain history to lower interest rates—defying the "gravity" of traditional high-interest debt.
 <div align="center">
   <img src="picc.png" width="800" alt="StellarYield Banner">
 </div>
-
-**StellarYield** is a decentralized, reputation-based lending platform built on the **Stellar Network** using **Soroban Smart Contracts**. It solves the problem of high collateral in DeFi by using a user's on-chain history to lower interest rates—defying the "gravity" of traditional high-interest debt.
 
 ---
 
