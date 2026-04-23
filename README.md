@@ -112,5 +112,5 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 - **Network:** Stellar Testnet
 - **Token:** Native XLM (SAC)
 - **Precision:** 7 Decimal places (Stroops)
-
+---
 
