@@ -60,7 +60,11 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
   6. Tanmay Chakraborty
 
 ---
-
+## 🛡️ On-Chain Proof
+<div align="center">
+  <img src="check.png" width="800" alt="On-Chain Proof">
+</div>
+---
 
 ## 🏗️ Technical Architecture
 1. **Frontend:** Next.js & Framer Motion (for smooth "Antigravity" UI animations).
