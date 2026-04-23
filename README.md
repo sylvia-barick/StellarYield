@@ -1,4 +1,4 @@
-# 🌌 StellarYield: Antigravity Micro-Lending Protocol
+# 🌌 StellarYield: Micro-Lending Protocol
 
 **StellarYield** is a decentralized, reputation-based lending platform built on the **Stellar Network** using **Soroban Smart Contracts**. It solves the problem of high collateral in DeFi by using a user's on-chain history to lower interest rates—defying the "gravity" of traditional high-interest debt.
 
