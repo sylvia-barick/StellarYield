@@ -78,7 +78,7 @@ We use a Linear Scaling Formula to ensure transparency. Every user sees exactly 
 ---
 
 ## 🔑 Key Technical Details
-- **Contract ID:** `CBVOHUCBRKE6DY7W4M7BIQU7CDKOXYG7ZGREEXL2AHFFSA7JETZFD6RB`
+- **Contract ID:** `CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL`
 - **Network:** Stellar Testnet
 - **Token:** Native XLM (SAC)
 - **Precision:** 7 Decimal places (Stroops)
