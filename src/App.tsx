@@ -568,28 +568,17 @@ export default function App() {
                           {error && activeTab === 'borrow' && (
                             <p className="text-red-500 text-[10px] font-mono uppercase tracking-widest">{error}</p>
                           )}
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="flex flex-col gap-4">
                             <button 
                               onClick={handleBorrow}
                               disabled={processing}
                               className={cn(
-                                "bg-indigo-600 text-white py-6 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 shadow-xl",
+                                "w-full bg-indigo-600 text-white py-6 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 shadow-xl",
                                 processing ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-500 active:scale-95 shadow-indigo-600/20"
                               )}
                             >
                               {processing ? "PROC..." : lastTxId ? "LOAN_OK" : "Borrow"}
                               <ArrowUpRight className="w-5 h-5" />
-                            </button>
-                            <button 
-                              onClick={handleRepay}
-                              disabled={processing || borrowedAmount === 0}
-                              className={cn(
-                                "bg-white text-black py-6 rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3",
-                                (processing || borrowedAmount === 0) ? "opacity-50 cursor-not-allowed" : "hover:bg-emerald-500 hover:text-white active:scale-95"
-                              )}
-                            >
-                              {processing ? "SYNC..." : lastTxId ? "REPAID" : "Repay"}
-                              <ShieldCheck className="w-5 h-5" />
                             </button>
                           </div>
                         </div>
