@@ -64,6 +64,7 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 <div align="center">
   <img src="check.png" width="800" alt="On-Chain Proof">
 </div>
+
 ---
 
 ## 🏗️ Technical Architecture
