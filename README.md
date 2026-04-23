@@ -20,6 +20,8 @@ In traditional finance, everyone pays the same high rate regardless of loyalty. 
 - ** On-Chain Verification (Stellar Expert):** [Contract ID Explorer](https://stellar.expert/explorer/testnet/contract/CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL)
 - ** GitHub Repository:** [github.com/sylvia-barick/StellarYield](https://github.com/sylvia-barick/StellarYield)
 
+---
+
 ### 🧠 The Reputation Engine
 We use the **Stellar Horizon API** to analyze:
 1. **Account Age:** Loyalty and long-term commitment to the network.
