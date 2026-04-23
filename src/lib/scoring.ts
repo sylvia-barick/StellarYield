@@ -1,51 +1,67 @@
 import { Horizon } from 'stellar-sdk';
 
 export interface ReputationScore {
-  score: number; // 0 to 1000
-  tier: 'Low' | 'Medium' | 'High' | 'Elite';
+  score: number; // 0 to 100
+  tier: 'Starter' | 'Trusted' | 'Elite';
   factors: {
-    accountAge: number;
-    transactionCount: number;
-    consistency: number;
-    volume: number;
+    accountAge: number; // Points for age
+    transactionCount: number; // Points for activity
+    daysOld: number;
+    totalTxs: number;
   };
 }
 
 export async function calculateReputation(
-  address: string, 
-  transactions: Horizon.ServerApi.TransactionRecord[]
+  createdAt: string | null,
+  txCount: number,
+  paymentCount: number
 ): Promise<ReputationScore> {
-  // Simple heuristic for demo
-  const txCount = transactions.length;
-  
-  // Account age (if we had the account creation date)
-  // For demo, we'll assume older based on index
-  const ageFactor = Math.min(txCount * 10, 250);
-  
-  // Transaction frequency factor
-  const frequencyFactor = Math.min(txCount * 5, 250);
-  
-  // Consistency (simulated)
-  const consistencyFactor = 200; 
-  
-  // Volume (simulated)
-  const volumeFactor = 200;
+  // 1. Calculate Age Factor (Max 20 points)
+  let ageFactor = 0;
+  let daysOld = 0;
+  if (createdAt) {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - createdDate.getTime());
+    daysOld = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // 1 point per 10 days, cap at 20
+    ageFactor = Math.min(daysOld / 10, 20);
+  }
 
-  const totalScore = ageFactor + frequencyFactor + consistencyFactor + volumeFactor;
+  // 2. Calculate Activity Score (Max 80 points)
+  // 2 points per transaction/payment as per user requirement (txCount * 2)
+  const totalActivity = txCount + paymentCount;
+  const activityScore = Math.min(totalActivity * 2, 80);
+
+  const totalScore = Math.round(ageFactor + activityScore);
   
-  let tier: ReputationScore['tier'] = 'Low';
-  if (totalScore > 800) tier = 'Elite';
-  else if (totalScore > 600) tier = 'High';
-  else if (totalScore > 400) tier = 'Medium';
+  let tier: ReputationScore['tier'] = 'Starter';
+  if (totalScore > 75) tier = 'Elite';
+  else if (totalScore >= 40) tier = 'Trusted';
 
   return {
     score: totalScore,
     tier,
     factors: {
-      accountAge: ageFactor,
-      transactionCount: txCount,
-      consistency: consistencyFactor,
-      volume: volumeFactor
+      accountAge: Math.round(ageFactor),
+      transactionCount: Math.round(activityScore),
+      daysOld,
+      totalTxs: totalActivity
     }
   };
+}
+
+export function calculateInterestRate(score: number): number {
+  const baseRate = 15;
+  const minRate = 5;
+  // Formula: Interest Rate = Base Rate - (Trust Score / 100 * (Base Rate - Min Rate))
+  const personalizedRate = baseRate - (score / 100) * (baseRate - minRate);
+  return personalizedRate;
+}
+
+export function getMaxBorrowAmount(score: number): number {
+  // Logic: 10 XLM per point in the reputation score
+  // 100 score = 1000 XLM max borrow
+  return score * 10;
 }
