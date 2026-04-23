@@ -46,7 +46,7 @@ We use a Linear Scaling Formula to ensure absolute transparency. Every user can 
 | **Active Developer** | 90 | 15% - (0.9 × 10%) | **6% (Elite Rate)** |
 | **Stellar Whale** | 100 | 15% - (1.0 × 10%) | **5% (Minimum Floor)** |
 
-
+---
 ## 👥 User Validation & Onboarding
 To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liquidity lifecycle and "Antigravity" interest scaling.
 
@@ -67,11 +67,50 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 
 ---
 
+## The "StellarYield" Concept
+```
+User connects wallet via Freighter
+        │
+        ▼
+ Reputation Engine scans Horizon API
+ [Trust Score calculated: 0 - 100]
+        │
+        ▼
+ System triggers "Antigravity" Formula
+ [Base Rate 15% → Floats down based on Score]
+        │
+        ▼
+ User interacts with Soroban Vault
+ [Lend XLM for yield OR Borrow at personal APR]
+        │
+        ▼
+ Repayment Center manages debt lifecycle
+ [On-chain proof of settlement via Stellar Expert]
+
+ ```
+
+---
+
 ## 🏗️ Technical Architecture
 1. **Frontend:** Next.js & Framer Motion (for smooth "Antigravity" UI animations).
 2. **Smart Contract:** Soroban (Rust) handling the **Stellar Asset Contract (SAC)** for real XLM transfers.
 3. **Data Layer:** Horizon API for real-time identity verification.
 4. **Wallet:** Integration with **Freighter** for secure transaction signing.
+ ```
+StellarYield/
+├── contracts/
+│   └── stellaryield/
+│       └── src/
+│           └── lib.rs        # Core Soroban lending & vault logic
+├── src/
+│   ├── app/                  # Next.js App Router (Lend/Borrow pages)
+│   ├── components/           # Antigravity UI & Trust Score animations
+│   ├── lib/                  # Horizon API client & Soroban SDK utils
+│   └── hooks/                # Custom hooks for real-time APR scaling
+├── public/                   # Project assets (check.jpg, picc.png)
+└── README.md
+ ```
+
 
 ---
 
@@ -81,6 +120,25 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 3. **SUPPLY:** User deposits XLM into the Native Core Vault.
 4. **BORROW:** User takes a loan at a personalized rate.
 5. **REPAY:** User clears debt in the Repayment Center to maintain their score.
+
+```mermaid
+flowchart TD
+    A[Connect Wallet] --> B[Fetch Account Data]
+    B --> C[Calculate Trust Score]
+    C --> D[Show Personalized APR]
+
+    D --> E{User Action}
+
+    E -->|Supply| F[Deposit XLM]
+    F --> G[Vault]
+
+    E -->|Borrow| H[Loan Request]
+    H --> I[Contract Check]
+    I --> J[Transfer XLM]
+
+    E -->|Repay| K[Repay Loan]
+    K --> L[Clear Debt]
+```
 
 ---
 
