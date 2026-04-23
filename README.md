@@ -99,8 +99,3 @@ To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liqui
 - **Precision:** 7 Decimal places (Stroops)
 
 ---
-
-## 🔮 Future Evolution
-1. **Multi-Asset Support:** Integrating USDC and EURC stablecoins to provide non-volatile lending options.
-2. **Dynamic Rates:** Transitioning to an algorithmic model where interest rates adjust based on vault utilization.
-3. **Advanced Identity:** Incorporating Soroban contract interaction history into the Trust Score for higher precision.
