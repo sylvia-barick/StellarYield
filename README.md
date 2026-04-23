@@ -37,7 +37,7 @@ These factors combine into a dynamic **Trust Score (0-100)**.
 We use a Linear Scaling Formula to ensure absolute transparency. Every user can verify exactly why they are paying their specific rate.
 
 **The Equation:**
- > **Personalized Interest Rate** = `Base Rate (15%)` - (`Trust Score` / 100 × `Max Reputation Discount (10%)`)
+ > **Personalized Interest Rate** = `Base Rate` - (`Trust Score` / 100 × `(Bae Rate - Min Rate)`)
 
 ### Example Scenarios:
 | User Type | Trust Score | Calculation | Final APR |
