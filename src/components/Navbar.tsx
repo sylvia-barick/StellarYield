@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wallet, LogOut, ShieldCheck, Activity, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { Wallet, LogOut, ShieldCheck, TrendingUp, ArrowUpRight } from 'lucide-react';
 import { connectWallet, WalletState } from '../lib/stellar';
 import { cn } from '../lib/utils';
 
@@ -44,27 +44,21 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
       scrolled ? "bg-[#0A0A0A]/90 backdrop-blur-xl border-[#2A2B2E] shadow-2xl" : "bg-transparent border-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-11 h-11 bg-indigo-600 rounded-lg flex items-center justify-center font-bold text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]">
-            <Activity className="w-6 h-6" />
-          </div>
-          <div>
-            <span className="text-lg font-extrabold tracking-tight text-white block leading-tight">STELLARYIELD</span>
-            <span className="mono-label !text-[8px] tracking-[0.2em]">Institutional Micro-Lending</span>
-          </div>
+        <div className="flex items-center ml-12">
+          <img src="/logo2.png" alt="StellarYield Logo" className="h-16 w-16 rounded-full object-cover border-2 border-indigo-500/30 shadow-2xl shadow-indigo-500/20" />
         </div>
 
-        <div className="hidden md:flex items-center gap-10 font-mono text-[10px] uppercase tracking-[0.2em] text-[#8E9299]">
-          <button onClick={() => switchTab('supply')} className="hover:text-white transition-colors flex items-center gap-1.5 group">
-            <TrendingUp className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+        <div className="hidden md:flex items-center gap-10 font-mono text-xs uppercase tracking-widest text-[#8E9299]">
+          <button onClick={() => switchTab('supply')} className="hover:text-white transition-colors flex items-center gap-2 group">
+            <TrendingUp className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
             Supply
           </button>
-          <button onClick={() => switchTab('borrow')} className="hover:text-white transition-colors flex items-center gap-1.5 group">
-            <ArrowUpRight className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+          <button onClick={() => switchTab('borrow')} className="hover:text-white transition-colors flex items-center gap-2 group">
+            <ArrowUpRight className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
             Borrow
           </button>
-          <button onClick={() => switchTab('repayment')} className="hover:text-white transition-colors flex items-center gap-1.5 group">
-            <ShieldCheck className="w-3 h-3 group-hover:text-indigo-400 transition-colors" />
+          <button onClick={() => switchTab('repayment')} className="hover:text-white transition-colors flex items-center gap-2 group">
+            <ShieldCheck className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
             Repayment
           </button>
         </div>
