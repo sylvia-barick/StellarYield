@@ -831,9 +831,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="md:col-span-2 space-y-8">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-white rounded flex items-center justify-center font-bold text-black text-lg uppercase">
-                SY
-              </div>
+              <img src="/logo2.png" alt="StellarYield Logo" className="w-12 h-12 object-contain rounded-full border border-[#2A2B2E] bg-[#151619]" />
               <span className="text-2xl font-black tracking-tighter text-white uppercase">StellarYield</span>
             </div>
             <p className="text-[#8E9299] text-sm max-w-sm leading-relaxed font-medium">

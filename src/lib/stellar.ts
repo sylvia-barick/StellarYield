@@ -107,14 +107,106 @@ export async function fetchTransactions(address: string, limit = 50) {
 }
 
 
-export const CONTRACT_ID = "CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL"; 
+export const VAULT_CONTRACT_ID = "CDWZGIEURSUAW7ENNJKXZ4FMEOOYXN3SH5EHNOEULGDM23CGFI7Z7PT3"; 
+export const REPUTATION_CONTRACT_ID = "CCRTRB6UQSLGYQGACMTFBVVXNI6RANLCDIALACGL52Z73EVKTQXFDYTQ";
 export const SOROBAN_RPC_URL = 'https://soroban-testnet.stellar.org';
 export const rpcServer = new StellarSdk.rpc.Server(SOROBAN_RPC_URL);
+
+/**
+ * Initialize the protocol (Admin only)
+ */
+export async function initializeProtocol(adminAddress: string) {
+  try {
+    const account = await server.loadAccount(adminAddress);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
+
+    let tx = new StellarSdk.TransactionBuilder(account, { fee: StellarSdk.BASE_FEE })
+      .addOperation(
+        contract.call('initialize',
+          StellarSdk.Address.fromString(adminAddress).toScVal(),
+          StellarSdk.Address.fromString(XLM_ID).toScVal() // Using Native XLM as the Vault Token
+        )
+      )
+      .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
+      .setTimeout(30)
+      .build();
+
+    tx = await rpcServer.prepareTransaction(tx);
+    const signedTx = await signTransaction(tx.toXDR(), { networkPassphrase: StellarSdk.Networks.TESTNET });
+    const xdrToSubmit = typeof signedTx === 'string' ? signedTx : signedTx.signedTxXdr;
+    return await rpcServer.sendTransaction(StellarSdk.TransactionBuilder.fromXDR(xdrToSubmit, StellarSdk.Networks.TESTNET));
+  } catch (e) {
+    console.error('Initialization error:', e);
+    throw e;
+  }
+}
+
+/**
+ * Update user score in the reputation contract
+ */
+export async function updateReputationScore(adminAddress: string, userAddress: string, points: number) {
+  try {
+    const account = await server.loadAccount(adminAddress);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
+
+    let tx = new StellarSdk.TransactionBuilder(account, { fee: StellarSdk.BASE_FEE })
+      .addOperation(
+        contract.call('set_score',
+          StellarSdk.Address.fromString(adminAddress).toScVal(),
+          StellarSdk.Address.fromString(userAddress).toScVal(),
+          StellarSdk.xdr.ScVal.scvU32(points)
+        )
+      )
+      .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
+      .setTimeout(30)
+      .build();
+
+    tx = await rpcServer.prepareTransaction(tx);
+    const signedTx = await signTransaction(tx.toXDR(), { networkPassphrase: StellarSdk.Networks.TESTNET });
+    const xdrToSubmit = typeof signedTx === 'string' ? signedTx : signedTx.signedTxXdr;
+    return await rpcServer.sendTransaction(StellarSdk.TransactionBuilder.fromXDR(xdrToSubmit, StellarSdk.Networks.TESTNET));
+  } catch (e) {
+    console.error('Update score error:', e);
+    throw e;
+  }
+}
+
+/**
+ * Get reputation score from on-chain
+ */
+export async function getOnChainScore(address: string): Promise<number> {
+  try {
+    const contract = new StellarSdk.Contract(REPUTATION_CONTRACT_ID);
+    const userAddress = StellarSdk.Address.fromString(address);
+    const sourceAccount = new StellarSdk.Account(address, "0");
+    
+    const tx = new StellarSdk.TransactionBuilder(sourceAccount, { fee: "100" })
+      .addOperation(contract.call("get_score", userAddress.toScVal()))
+      .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
+      .setTimeout(30)
+      .build();
+
+    const simulation = await rpcServer.simulateTransaction(tx);
+    if (StellarSdk.rpc.Api.isSimulationSuccess(simulation)) {
+      const result = simulation.result?.retval;
+      if (result) {
+        try {
+          return Number(result.i128().lo);
+        } catch (e) {
+          return result.u32(); // Fallback if it's still u32
+        }
+      }
+    }
+    return 50;
+  } catch (e) {
+    return 50;
+  }
+}
 
 export async function supplyFunds(address: string, amount: string) {
   try {
     const account = await server.loadAccount(address);
-    const contract = new StellarSdk.Contract(CONTRACT_ID);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
     const stroopAmount = toStroops(amount);
 
     let tx = new StellarSdk.TransactionBuilder(account, {
@@ -123,7 +215,6 @@ export async function supplyFunds(address: string, amount: string) {
       .addOperation(
         contract.call('deposit',
           StellarSdk.Address.fromString(address).toScVal(),
-          StellarSdk.Address.fromString(XLM_ID).toScVal(),
           StellarSdk.xdr.ScVal.scvI128(new StellarSdk.xdr.Int128Parts({
             lo: StellarSdk.xdr.Uint64.fromString(stroopAmount),
             hi: StellarSdk.xdr.Int64.fromString('0')
@@ -160,7 +251,7 @@ export async function supplyFunds(address: string, amount: string) {
 export async function borrowFunds(address: string, amount: string) {
   try {
     const account = await server.loadAccount(address);
-    const contract = new StellarSdk.Contract(CONTRACT_ID);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
     const stroopAmount = toStroops(amount);
 
     let tx = new StellarSdk.TransactionBuilder(account, {
@@ -169,7 +260,6 @@ export async function borrowFunds(address: string, amount: string) {
       .addOperation(
         contract.call('borrow',
           StellarSdk.Address.fromString(address).toScVal(),
-          StellarSdk.Address.fromString(XLM_ID).toScVal(),
           StellarSdk.xdr.ScVal.scvI128(new StellarSdk.xdr.Int128Parts({
             lo: StellarSdk.xdr.Uint64.fromString(stroopAmount),
             hi: StellarSdk.xdr.Int64.fromString('0')
@@ -204,7 +294,7 @@ export async function borrowFunds(address: string, amount: string) {
 export async function repayFunds(address: string, amount: string) {
   try {
     const account = await server.loadAccount(address);
-    const contract = new StellarSdk.Contract(CONTRACT_ID);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
     const stroopAmount = toStroops(amount);
 
     let tx = new StellarSdk.TransactionBuilder(account, {
@@ -213,7 +303,6 @@ export async function repayFunds(address: string, amount: string) {
       .addOperation(
         contract.call('repay',
           StellarSdk.Address.fromString(address).toScVal(),
-          StellarSdk.Address.fromString(XLM_ID).toScVal(),
           StellarSdk.xdr.ScVal.scvI128(new StellarSdk.xdr.Int128Parts({
             lo: StellarSdk.xdr.Uint64.fromString(stroopAmount),
             hi: StellarSdk.xdr.Int64.fromString('0')
@@ -257,7 +346,7 @@ export async function fetchPaymentsCount(address: string) {
 
 export async function get_balance(address: string): Promise<string> {
   try {
-    const contract = new StellarSdk.Contract(CONTRACT_ID);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
     const userAddress = StellarSdk.Address.fromString(address);
     
     // Create a dummy transaction to simulate the call
@@ -265,7 +354,7 @@ export async function get_balance(address: string): Promise<string> {
     const tx = new StellarSdk.TransactionBuilder(sourceAccount, {
       fee: "100",
     })
-      .addOperation(contract.call("get_balance", userAddress.toScVal()))
+      .addOperation(contract.call("get_deposit", userAddress.toScVal()))
       .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
       .setTimeout(30)
       .build();
@@ -289,14 +378,14 @@ export async function get_balance(address: string): Promise<string> {
 
 export async function get_borrowed(address: string): Promise<string> {
   try {
-    const contract = new StellarSdk.Contract(CONTRACT_ID);
+    const contract = new StellarSdk.Contract(VAULT_CONTRACT_ID);
     const userAddress = StellarSdk.Address.fromString(address);
     
     const sourceAccount = new StellarSdk.Account(address, "0");
     const tx = new StellarSdk.TransactionBuilder(sourceAccount, {
       fee: "100",
     })
-      .addOperation(contract.call("get_borrowed", userAddress.toScVal()))
+      .addOperation(contract.call("get_debt", userAddress.toScVal()))
       .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
       .setTimeout(30)
       .build();

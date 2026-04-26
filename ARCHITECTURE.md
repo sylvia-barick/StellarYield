@@ -6,13 +6,10 @@ StellarYield is a non-custodial decentralized micro-lending protocol. It leverag
 
 1. **User Connection**: Users connect via Freighter Wallet (SEP-7/SEP-10 standards).
 2. **Horizon Sync**: The protocol fetches the user's historical transaction data directly from the Stellar Horizon API.
-3. **Reputation Engine**: A client-side (and eventually on-chain Soroban) logic analyzes transaction consistency, account age, and volume to generate a "Reputation Score".
+3. **Reputation Engine**: An on-chain Reputation Contract stores user trust scores. Scores are updated based on repayment history and network activity.
 4. **Liquidity Pools (Soroban)**: 
-   - Lenders deposit XLM/USDC into a Soroban smart contract.
-   - The contract issues LP tokens and manages interest accrual.
-5. **Borrowing Logic**:
-   - Interest rates are calculated dynamically: `Rate = BaseRate - (ReputationScore / Divisor)`.
-   - Borrowers can access micro-loans with lower collateral requirements if their Reputation Score is "Elite" or "High".
+   - Lenders deposit assets into the Vault Contract.
+   - The Vault Contract performs **Cross-Contract Calls** to the Reputation Contract to verify borrower eligibility and calculate limits.
 
 ## Component Breakdown
 
@@ -29,8 +26,9 @@ StellarYield is a non-custodial decentralized micro-lending protocol. It leverag
   - Network Participation (Amount of assets moved)
 
 ### Smart Contract Layer (Soroban - Rust)
-- **Pool Contract**: Manages the vault and lending logic.
-- **Oracle (Future)**: Will eventually move the Reputation Score logic on-chain using Soroban cross-contract calls.
+- **Vault Contract**: Manages liquidity, deposits, and loans. Calls the Reputation Contract for risk assessment.
+- **Reputation Contract**: Decoupled trust scoring system. Acts as a data provider for the Vault.
+- **Cross-Contract Calls**: The Vault uses the `Reputation Contract` interface to fetch scores in real-time during the `borrow` transaction.
 
 ## Security & Privacy
 - **Privacy**: No KYC required. Scoring is strictly based on public ledger activity.
