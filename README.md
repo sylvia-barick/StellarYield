@@ -1,51 +1,65 @@
 # 🌌 StellarYield: Micro-Lending Protocol
 
-![Stellar](https://img.shields.io/badge/Built%20on-Stellar-blue)
-![Soroban](https://img.shields.io/badge/Smart%20Contracts-Soroban-orange)
-![Status](https://img.shields.io/badge/Status-Testnet-success)
-![License](https://img.shields.io/badge/License-MIT-green)
-
-**StellarYield** is a decentralized, reputation-based lending platform built on the **Stellar Network** using **Soroban Smart Contracts**. It solves the problem of high collateral in DeFi by using a user's on-chain history to lower interest rates—defying the "gravity" of traditional high-interest debt.
 <div align="center">
-  <img src="picc.png" width="800" alt="StellarYield Banner">
+  <img src="public/logo.png" width="180" alt="StellarYield Logo">
+  
+  [![CI Status](https://github.com/sylvia-barick/StellarYield/actions/workflows/stellar-ci.yml/badge.svg)](https://github.com/sylvia-barick/StellarYield/actions)
+  [![Vercel Deployment](https://therealsujitk-vercel-badge.vercel.app/?app=stellar-yield-rose)](https://stellar-yield-rose.vercel.app/)
+  ![Built on Stellar](https://img.shields.io/badge/Built%20on-Stellar-blue)
+  ![Smart Contracts-Soroban](https://img.shields.io/badge/Smart%20Contracts-Soroban-orange)
+  
+  **Reputation-Driven Liquidity • Algorithmic Credit • Trustless Yield**
 </div>
 
 ---
 
-## 🚀 The Vision: "Antigravity" Lending
-In traditional finance, everyone pays the same high rate regardless of loyalty. In StellarYield, your **Stellar Trust Score** acts as your financial identity. The better your history, the lower your interest rate.
+## 🚀 Protocol Overview: "Antigravity" Lending
+StellarYield is a decentralized, reputation-based lending platform built on the **Stellar Network**. It solves the capital-inefficiency problem in DeFi by using a user's on-chain identity to lower interest rates—defying the "gravity" of traditional high-interest debt.
+
+### 🛡️ Features
+To meet production standards, the protocol has been refactored into a **Modular Multi-Contract Architecture**:
+- **Inter-Contract Communication:** The Liquidity Vault performs synchronous cross-contract calls to the Reputation Engine to verify creditworthiness.
+- **On-Chain Algorithmic Math:** Interest rates are calculated dynamically in Rust using Basis Point (BPS) precision.
+- **Automated CI/CD:** A professional pipeline verifies every contract commit with `cargo test` and checks frontend build health.
 
 ---
 
-## 🔌 Project Links & Verification
-- **Video Demonstration:** [Demo video](https://youtu.be/GPmrRI8RiSo?si=9-Ih2V02ixWXX4RD)
+## 🔌 Project Links & Registry
 - **Live MVP Demo:** [stellar-yield-rose.vercel.app](https://stellar-yield-rose.vercel.app/)
-- **On-Chain Verification (Stellar Expert):** [Contract ID Explorer](https://stellar.expert/explorer/testnet/contract/CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL)
-- **GitHub Repository:** [github.com/sylvia-barick/StellarYield](https://github.com/sylvia-barick/StellarYield)
+- **Video Demonstration:** [Watch on YouTube](https://youtu.be/GPmrRI8RiSo)
+- **GitHub Repository:** [StellarYield Repo](https://github.com/sylvia-barick/StellarYield)
+
+### 🏛️ On-Chain Contract Registry (Testnet)
+| Component | Contract ID |
+| :--- | :--- |
+| **Liquidity Vault** | `CDWZGIEURSUAW7ENNJKXZ4FMEOOYXN3SH5EHNOEULGDM23CGFI7Z7PT3` |
+| **Reputation Engine** | `CCRTRB6UQSLGYQGACMTFBVVXNI6RANLCDIALACGL52Z73EVKTQXFDYTQ` |
+| **Asset (Native XLM)** | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
 
 ---
 
-### 🧠 The Reputation Engine
-We use the **Stellar Horizon API** to analyze:
-1. **Account Age:** Loyalty and long-term commitment to the network.
-2. **Network Activity:** Total transaction count and engagement level.
-These factors combine into a dynamic **Trust Score (0-100)**.
+## 📐 Economic Model
+We use a **Linear Scaling Formula** enforced directly on the blockchain. 
+
+
+
+**The Formula:** `Personal APR` = `Base (15%)` - (`Trust Score` / 100 × `Max Discount (10%)`)
+
+| User Category | Trust Score | On-Chain APR |
+| :--- | :--- | :--- |
+| **New User** | 0 | **15% (Base Rate)** |
+| **Active Contributor** | 90 | **6% (Elite Rate)** |
+| **Network Whale** | 100 | **5% (Minimum Floor)** |
 
 ---
 
-## 📐 Economic Model (The Formula)
-We use a Linear Scaling Formula to ensure absolute transparency. Every user can verify exactly why they are paying their specific rate.
+## 🏗️ Technical Architecture
 
-**The Equation:**
- > **Personalized Interest Rate** = `Base Rate` - (`Trust Score` / 100 × `(Base Rate - Min Rate)`)
 
-### Example Scenarios:
-| User Type | Trust Score | Calculation | Final APR |
-| :--- | :--- | :--- | :--- |
-| **New Account** | 0 | 15% - (0 × 10%) | **15% (Base Rate)** |
-| **Active Developer** | 90 | 15% - (0.9 × 10%) | **6% (Elite Rate)** |
-| **Stellar Whale** | 100 | 15% - (1.0 × 10%) | **5% (Minimum Floor)** |
-
+1. **Reputation Layer (Soroban):** Manages persistent ledger storage for user scores and repayment history.
+2. **Financial Layer (Vault):** Handles cross-contract token transfers and calculates interest via the Reputation bridge.
+3. **Frontend:** Built with **Next.js** and **Framer Motion** for a premium "Antigravity" user experience.
+4. **DevOps:** GitHub Actions pipeline ensures 100% test coverage for Rust artifacts.
 ---
 ## 👥 User Validation & Onboarding
 To validate the MVP, we onboarded 6 testnet users to verify the end-to-end liquidity lifecycle and "Antigravity" interest scaling.
@@ -165,10 +179,5 @@ flowchart TD
 
 ---
 
-## 🔑 Key Technical Details
-- **Contract ID:** `CB4LDGHHLIFULYQPMKZCN6QD3FOZE7BANAF2LYIPYFQLDD3VDQJWFGCL`
-- **Network:** Stellar Testnet
-- **Token:** Native XLM (SAC)
-- **Precision:** 7 Decimal places (Stroops)
----
+
 
