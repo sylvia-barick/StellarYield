@@ -1,7 +1,7 @@
 # 🌌 StellarYield: Micro-Lending Protocol
 
 <div align="center">
-  <img src="public/logo.png" width="180" alt="StellarYield Logo">
+  <img src="pic2.png" width="800" alt="StellarYield Logo">
   
   [![CI Status](https://github.com/sylvia-barick/StellarYield/actions/workflows/stellar-ci.yml/badge.svg)](https://github.com/sylvia-barick/StellarYield/actions)
   [![Vercel Deployment](https://therealsujitk-vercel-badge.vercel.app/?app=stellar-yield-rose)](https://stellar-yield-rose.vercel.app/)
@@ -16,12 +16,16 @@
 ## 🚀 Protocol Overview: "Antigravity" Lending
 StellarYield is a decentralized, reputation-based lending platform built on the **Stellar Network**. It solves the capital-inefficiency problem in DeFi by using a user's on-chain identity to lower interest rates—defying the "gravity" of traditional high-interest debt.
 
-### 🛡️ Features
-To meet production standards, the protocol has been refactored into a **Modular Multi-Contract Architecture**:
-- **Inter-Contract Communication:** The Liquidity Vault performs synchronous cross-contract calls to the Reputation Engine to verify creditworthiness.
-- **On-Chain Algorithmic Math:** Interest rates are calculated dynamically in Rust using Basis Point (BPS) precision.
-- **Automated CI/CD:** A professional pipeline verifies every contract commit with `cargo test` and checks frontend build health.
+### 🛡️ Protocol Features & Engineering Upgrades
+To meet the rigorous production standards of the Stellar ecosystem, the protocol has been refactored into a **Modular Multi-Contract Architecture**:
 
+* **Inter-Contract Communication:** Implemented synchronous cross-contract calls between the Liquidity Vault and the Reputation Engine. This ensures creditworthiness is verified atomically on-chain before capital is deployed.
+* **On-Chain Algorithmic Math:** Transitioned financial logic from the client-side to the smart contract, utilizing **Rust-based Basis Point (BPS) math** for trustless, transparent interest scaling.
+* **Persistent State Management:** Leveraged Soroban’s persistent storage to maintain a decentralized registry of user reputation and debt lifecycles, ensuring data longevity on the ledger.
+* **Secure Access Control:** Integrated `require_auth()` patterns to ensure that only the contract Admin can initialize the protocol and only verified users can interact with their own debt positions.
+* **Automated CI/CD Pipeline:** Every commit is verified by a custom GitHub Actions workflow that automates contract testing (`cargo test`), WASM compilation, and React production build health.
+* **Real-Time Reputation Scanning:** Integrated the **Stellar Horizon API** to fetch live account metrics, which are committed to the blockchain as the foundation of the Trust Score.
+* **Premium "Antigravity" UI:** A high-fidelity dashboard built with **Next.js and Framer Motion**, providing real-time visual feedback of interest rates floating down as reputation increases.
 ---
 
 ## 🔌 Project Links & Registry
