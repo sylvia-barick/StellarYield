@@ -277,15 +277,15 @@ export default function App() {
       <div className="fixed inset-0 pointer-events-none -z-10 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDIwaDQwTTIwIDB2NDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')]"></div>
       <Navbar wallet={wallet} setWallet={setWallet} switchTab={switchTab} enterDemoMode={enterDemoMode} />
 
-      <main className="pt-32 pb-24 px-8 max-w-7xl mx-auto relative z-10">
+      <main className="pt-32 pb-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
         {/* Header Stats Bento */}
         <section className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-16">
-          <div className="lg:col-span-2 brutal-card p-10 flex flex-col justify-center relative group min-h-[320px]">
+          <div className="lg:col-span-2 brutal-card p-6 md:p-10 flex flex-col justify-center relative group min-h-[320px]">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <Activity className="w-48 h-48 rotate-12" />
             </div>
             <div className="relative z-10">
-              <div className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 mb-6 flex items-center justify-between">
+              <div className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 flex flex-wrap items-center gap-2 justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-brutal-blue text-white animate-pulse" />
                   Network: Horizon Mainline
@@ -304,7 +304,7 @@ export default function App() {
                   </div>
                 </div>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-wider leading-normal mb-6 uppercase font-display bg-white px-4 py-2 border-4 border-black brutal-shadow inline-block">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-wider leading-normal mb-6 uppercase font-display bg-white px-4 py-2 border-4 border-black brutal-shadow inline-block max-w-full break-words">
                 LIQUIDITY <br />
                 <span className="text-black/40">MEETS</span> REPUTATION
               </h1>
@@ -312,7 +312,7 @@ export default function App() {
                 The first decentralized micro-lending engine on Stellar. 
                 Using on-chain history to enable collateral-efficient financing.
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <button 
                   onClick={() => switchTab('supply')}
                   className="bg-white text-black px-6 py-3 rounded-none font-bold text-xs uppercase tracking-widest hover:bg-brutal-blue text-white hover:text-black transition-all active:scale-95 shadow-xl shadow-white/5"
@@ -379,36 +379,36 @@ export default function App() {
         </section>
 
         {/* Tab Interface */}
-        <div className="flex items-center gap-10 mb-10 border-b border-black">
+        <div className="flex flex-wrap justify-start items-center gap-x-4 gap-y-4 md:gap-10 mb-10 border-b border-black pb-2">
           <button 
             onClick={() => switchTab('supply')}
             className={cn(
-              "pb-4 font-mono text-[10px] uppercase tracking-[0.2em] transition-all relative",
+              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
               activeTab === 'supply' ? "text-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             LENDING_VAULTS
-            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
           </button>
           <button 
             onClick={() => switchTab('borrow')}
             className={cn(
-              "pb-4 font-mono text-[10px] uppercase tracking-[0.2em] transition-all relative",
+              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
               activeTab === 'borrow' ? "text-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             BORROW_CONSOLE
-            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
           </button>
           <button 
             onClick={() => switchTab('repayment')}
             className={cn(
-              "pb-4 font-mono text-[10px] uppercase tracking-[0.2em] transition-all relative",
+              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
               activeTab === 'repayment' ? "text-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             REPAYMENT_CENTER
-            {activeTab === 'repayment' && <motion.div layoutId="tab" className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'repayment' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
           </button>
         </div>
 
@@ -424,12 +424,12 @@ export default function App() {
                   className="space-y-6"
                 >
                   <div className="brutal-card p-10">
-                    <div className="flex items-center justify-between mb-12">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 mb-12">
                       <div>
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 mb-2 block">Protocol Asset</span>
-                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase">Native Core Vault</h2>
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4 block w-fit">Protocol Asset</span>
+                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase break-words max-w-full">Native Core Vault</h2>
                       </div>
-                      <div className="p-4 bg-brutal-green/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3">
+                      <div className="p-4 bg-brutal-green/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3 w-full md:w-auto">
                         <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] !text-brutal-green">Yield Profile</span>
                         <span className="text-3xl font-black text-brutal-green tracking-tighter">MAXIMUM</span>
                       </div>
@@ -452,22 +452,24 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-4">
-                      <div className="relative">
-                        <div className="absolute left-6 top-1/2 -translate-y-1/2 font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 !text-black/70 font-bold">AMOUNT</div>
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex justify-between items-end">
+                          <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] !text-black/70 font-bold w-fit">AMOUNT</span>
+                          <button 
+                            onClick={() => setAmount('100')} 
+                            className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-brutal-blue cursor-pointer hover:bg-brutal-pink transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none w-fit"
+                          >
+                            ALL
+                          </button>
+                        </div>
                         <input 
                           type="text" 
                           placeholder="INPUT VALUE" 
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
-                          className="w-full bg-white border-4 border-black rounded-none pl-40 pr-24 py-6 font-black text-xl focus:border-brutal-blue outline-none transition-all placeholder:text-black/30 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                          className="w-full bg-white border-4 border-black rounded-none px-6 py-6 font-black text-xl focus:border-brutal-blue outline-none transition-all placeholder:text-black/30 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                         />
-                        <button 
-                          onClick={() => setAmount('100')} // Example default
-                          className="absolute right-6 top-1/2 -translate-y-1/2 font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 text-brutal-blue font-black cursor-pointer hover:text-indigo-300 transition-colors bg-brutal-pink/20 px-2 py-1 rounded"
-                        >
-                          ALL
-                        </button>
                       </div>
                       {error && activeTab === 'supply' && (
                         <p className="text-red-500 text-[10px] font-mono uppercase tracking-widest">{error}</p>
@@ -500,12 +502,12 @@ export default function App() {
                   className="space-y-6"
                 >
                    <div className="brutal-card p-10 border-black">
-                    <div className="flex items-center justify-between mb-12">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 mb-12">
                       <div>
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 mb-2 block">Micro-Financing</span>
-                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase">Algorithm Credit</h2>
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4 block w-fit">Micro-Financing</span>
+                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase break-words max-w-full">Algorithm Credit</h2>
                       </div>
-                      <div className="p-4 bg-brutal-pink/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3">
+                      <div className="p-4 bg-brutal-pink/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3 w-full md:w-auto">
                         <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Credit Status</span>
                         <span className="text-3xl font-black text-brutal-blue tracking-tighter uppercase">
                           {reputation ? reputation.tier : "Locked"}
@@ -514,12 +516,12 @@ export default function App() {
                     </div>
 
                     {!wallet.connected ? (
-                      <div className="p-20 text-center bg-white rounded-none border-2 border-dashed border-black">
+                      <div className="p-6 md:p-20 text-center bg-white rounded-none border-2 border-dashed border-black">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border border-black shadow-2xl">
                           <Wallet className="w-7 h-7 text-black/70 font-bold" />
                         </div>
                         <h3 className="text-xl font-black text-black mb-2 uppercase tracking-tight">Identity Required</h3>
-                        <p className="text-black/70 font-bold font-mono text-[10px] uppercase tracking-widest">Connect Freighter to compute reputation score</p>
+                        <p className="text-black/70 font-bold font-mono text-[10px] uppercase tracking-widest leading-relaxed">Connect Freighter to compute reputation score</p>
                       </div>
                     ) : loading ? (
                        <div className="p-20 text-center">
@@ -552,18 +554,20 @@ export default function App() {
                         </div>
 
                         <div className="space-y-6">
-                          <div className="relative">
-                             <div className="absolute left-6 top-1/2 -translate-y-1/2 font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 !text-black/70 font-bold">AMOUNT</div>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex justify-between items-end">
+                              <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] !text-black/70 font-bold w-fit">AMOUNT</span>
+                              <div className="text-[9px] font-mono font-bold text-black bg-white px-2 py-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                MAX: {reputation ? getMaxBorrowAmount(reputation.score) : 0} XLM
+                              </div>
+                            </div>
                             <input 
                               type="text" 
                               placeholder="INPUT VALUE" 
                               value={amount}
                               onChange={(e) => setAmount(e.target.value)}
-                              className="w-full bg-white border-4 border-black rounded-none pl-40 pr-24 py-6 font-black text-xl focus:border-brutal-blue outline-none transition-all placeholder:text-black/30 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                              className="w-full bg-white border-4 border-black rounded-none px-6 py-6 font-black text-xl focus:border-brutal-blue outline-none transition-all placeholder:text-black/30 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                             />
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 text-[9px] font-mono text-brutal-blue">
-                              MAX: {reputation ? getMaxBorrowAmount(reputation.score) : 0} XLM
-                            </div>
                           </div>
                           {error && activeTab === 'borrow' && (
                             <p className="text-red-500 text-[10px] font-mono uppercase tracking-widest">{error}</p>
@@ -595,12 +599,12 @@ export default function App() {
                   className="space-y-6"
                 >
                   <div className="brutal-card p-10 border-black brutal-shadow">
-                     <div className="flex items-center justify-between mb-12">
+                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-0 mb-12">
                       <div>
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2 mb-2 block">Active Loans</span>
-                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase">Repayment Center</h2>
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4 block w-fit">Active Loans</span>
+                        <h2 className="text-3xl font-black text-black tracking-tighter uppercase break-words max-w-full">Repayment Center</h2>
                       </div>
-                      <div className="p-4 bg-brutal-pink/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3">
+                      <div className="p-4 bg-brutal-pink/20 rounded-none border-4 border-black text-center flex flex-col items-center gap-3 w-full md:w-auto">
                         <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-black font-black bg-white px-2 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">Credit Usage</span>
                         <span className="text-3xl font-black text-brutal-blue tracking-tighter uppercase">
                           {reputation && borrowedAmount > 0 ? ((borrowedAmount / getMaxBorrowAmount(reputation.score)) * 100).toFixed(1) : "0.0"}%
@@ -609,12 +613,12 @@ export default function App() {
                     </div>
 
                     {!wallet.connected || borrowedAmount === 0 ? (
-                      <div className="p-20 text-center bg-white rounded-none border-2 border-dashed border-black">
+                      <div className="p-6 md:p-20 text-center bg-white rounded-none border-2 border-dashed border-black">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border border-black">
                           <ShieldCheck className="w-7 h-7 text-brutal-green/50" />
                         </div>
                         <h3 className="text-xl font-black text-black mb-2 uppercase tracking-tight">No Active Debt</h3>
-                        <p className="text-black/70 font-bold font-mono text-[10px] uppercase tracking-widest">Your account is in good standing with the protocol.</p>
+                        <p className="text-black/70 font-bold font-mono text-[10px] uppercase tracking-widest leading-relaxed">Your account is in good standing with the protocol.</p>
                       </div>
                     ) : (
                       <div className="space-y-8">
