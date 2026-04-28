@@ -41,34 +41,34 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-8 py-5 border-b",
-      scrolled ? "bg-[#0A0A0A]/90 backdrop-blur-xl border-[#2A2B2E] shadow-2xl" : "bg-transparent border-transparent"
+      scrolled ? "bg-brutal-yellow border-black border-b-4 brutal-shadow" : "bg-transparent border-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center ml-12">
-          <img src="/logo2.png" alt="StellarYield Logo" className="h-16 w-16 rounded-full object-cover border-2 border-indigo-500/30 shadow-2xl shadow-indigo-500/20" />
+          <img src="/logo2.png" alt="StellarYield Logo" className="h-16 w-16 rounded-full object-cover border-4 border-black brutal-shadow" />
         </div>
 
-        <div className="hidden md:flex items-center gap-10 font-mono text-xs uppercase tracking-widest text-[#8E9299]">
-          <button onClick={() => switchTab('supply')} className="hover:text-white transition-colors flex items-center gap-2 group">
-            <TrendingUp className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
+        <div className="hidden md:flex items-center gap-10 font-mono text-xs uppercase tracking-widest text-black font-bold">
+          <button onClick={() => switchTab('supply')} className="hover:text-brutal-blue transition-colors flex items-center gap-2 group">
+            <TrendingUp className="w-4 h-4 group-hover:text-brutal-pink transition-colors" />
             Supply
           </button>
-          <button onClick={() => switchTab('borrow')} className="hover:text-white transition-colors flex items-center gap-2 group">
-            <ArrowUpRight className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
+          <button onClick={() => switchTab('borrow')} className="hover:text-brutal-blue transition-colors flex items-center gap-2 group">
+            <ArrowUpRight className="w-4 h-4 group-hover:text-brutal-pink transition-colors" />
             Borrow
           </button>
-          <button onClick={() => switchTab('repayment')} className="hover:text-white transition-colors flex items-center gap-2 group">
-            <ShieldCheck className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
+          <button onClick={() => switchTab('repayment')} className="hover:text-brutal-blue transition-colors flex items-center gap-2 group">
+            <ShieldCheck className="w-4 h-4 group-hover:text-brutal-pink transition-colors" />
             Repayment
           </button>
         </div>
 
         <div className="flex items-center gap-4">
           {wallet.connected ? (
-            <div className="flex items-center gap-4 pl-4 border-l border-[#2A2B2E]">
-              <div className="flex flex-col items-end pr-4 border-r border-[#2A2B2E]/50">
+            <div className="flex items-center gap-4 pl-4 border-l border-black">
+              <div className="flex flex-col items-end pr-4 border-r border-black/50">
                 <span className="mono-label !text-[8px] text-indigo-400 mb-1">Wallet XLM</span>
-                <span className="text-sm font-black text-white tracking-tighter">
+                <span className="text-sm font-black text-black tracking-tighter">
                   {wallet.balance ? Number(wallet.balance).toFixed(2) : '0.00'}
                 </span>
               </div>
@@ -77,13 +77,13 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
                   <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                   <span className="mono-label !text-[9px]">Live Status</span>
                 </div>
-                <span className="text-xs font-mono font-bold text-white mt-1 uppercase tracking-tighter">
+                <span className="text-xs font-mono font-bold text-black mt-1 uppercase tracking-tighter">
                    Identity_Verified
                 </span>
               </div>
               <button 
                 onClick={handleDisconnect}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#2A2B2E]/50 text-[#8E9299] hover:bg-red-500/10 hover:text-red-500 transition-all border border-[#2A2B2E]"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-white brutal-btn p-2 text-black font-bold hover:bg-red-500/10 hover:text-red-500 transition-all border border-black"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -92,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
             <div className="flex items-center gap-2">
               <button 
                 onClick={enterDemoMode}
-                className="px-4 py-2.5 rounded-lg border border-amber-500/30 text-amber-500 text-[9px] font-bold uppercase tracking-widest hover:bg-amber-500/10 transition-all font-mono"
+                className="px-4 py-2.5 rounded-lg bg-white text-black px-4 py-2 text-xs font-bold uppercase tracking-widest font-mono brutal-btn"
               >
                 DEMO_MODE
               </button>
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
                 onClick={handleConnect}
                 disabled={connecting}
                 className={cn(
-                  "group relative flex items-center gap-2 bg-indigo-600 px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-white transition-all shadow-[0_0_25px_rgba(79,70,229,0.4)]",
+                  "group relative flex items-center gap-2 bg-indigo-600 px-6 py-2.5 rounded-lg font-bold text-xs uppercase tracking-widest text-black transition-all shadow-[0_0_25px_rgba(79,70,229,0.4)]",
                   connecting ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-500 active:scale-95"
                 )}
               >
