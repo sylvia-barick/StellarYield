@@ -16,7 +16,7 @@
 
 @layer base {
   body {
-    @apply antialiased text-black bg-brutal-yellow;
+    @apply antialiased text-black bg-[#a6d8f8];
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
@@ -68,4 +68,35 @@
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-brutal-orange;
+}
+
+@keyframes parallax_fg {
+  0% { background-position: 2765px 100%; }
+  100% { background-position: 550px 100%; }
+}
+
+@keyframes parallax_bike {
+  0% { background-position: -300px 100%; }
+  100% { background-position: 2000px 100%; }
+}
+
+.hero-container {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background-color: #a6d8f8;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation-name: parallax_fg;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
 }

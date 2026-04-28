@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ wallet, setWallet, switchTab, en
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 md:px-8 py-3 md:py-5 border-b",
-      scrolled ? "bg-brutal-yellow border-black border-b-4 brutal-shadow" : "bg-transparent border-transparent"
+      scrolled ? "bg-[#a6d8f8] border-black border-b-4 brutal-shadow" : "bg-transparent border-transparent"
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between flex-nowrap md:flex-wrap gap-1 md:gap-4 w-full">
         <div className="flex items-center ml-0 md:ml-12 shrink-0">

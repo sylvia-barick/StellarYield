@@ -19,6 +19,7 @@ import { Navbar } from './components/Navbar';
 import { WalletState, fetchTransactions, fetchAccountAge, fetchTransactionsCount, fetchPaymentsCount, server, checkConnection, supplyFunds, borrowFunds, repayFunds, get_balance, get_borrowed, getWalletBalance } from './lib/stellar';
 import { ReputationScore, calculateReputation, getMaxBorrowAmount, calculateInterestRate } from './lib/scoring';
 import { cn, formatAmount } from './lib/utils';
+import MountainVistaParallax from './components/ui/mountain-vista-bg';
 
 // Mock data for yield history (internal values, axis will be hidden)
 const yieldData = [
@@ -273,8 +274,8 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-brutal-yellow text-black font-sans selection:bg-brutal-pink selection:text-black relative overflow-x-hidden">
-      <div className="fixed inset-0 pointer-events-none -z-10 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0wIDIwaDQwTTIwIDB2NDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')]"></div>
+    <div className="min-h-screen text-black font-sans selection:bg-brutal-pink selection:text-black relative overflow-x-hidden">
+      <MountainVistaParallax />
       <Navbar wallet={wallet} setWallet={setWallet} switchTab={switchTab} enterDemoMode={enterDemoMode} />
 
       <main className="pt-32 pb-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
@@ -379,36 +380,36 @@ export default function App() {
         </section>
 
         {/* Tab Interface */}
-        <div className="flex flex-wrap justify-start items-center gap-x-4 gap-y-4 md:gap-10 mb-10 border-b border-black pb-2">
+        <div className="flex flex-wrap justify-start items-center gap-x-4 gap-y-4 md:gap-10 mb-10 border-4 border-black bg-white p-4 brutal-shadow w-fit">
           <button 
             onClick={() => switchTab('supply')}
             className={cn(
-              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
-              activeTab === 'supply' ? "text-black" : "text-black/70 font-bold hover:text-black"
+              "pb-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
+              activeTab === 'supply' ? "text-black font-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             LENDING_VAULTS
-            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'supply' && <motion.div layoutId="tab" className="absolute bottom-[-16px] left-0 right-0 h-1 bg-brutal-blue text-white" />}
           </button>
           <button 
             onClick={() => switchTab('borrow')}
             className={cn(
-              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
-              activeTab === 'borrow' ? "text-black" : "text-black/70 font-bold hover:text-black"
+              "pb-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
+              activeTab === 'borrow' ? "text-black font-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             BORROW_CONSOLE
-            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'borrow' && <motion.div layoutId="tab" className="absolute bottom-[-16px] left-0 right-0 h-1 bg-brutal-blue text-white" />}
           </button>
           <button 
             onClick={() => switchTab('repayment')}
             className={cn(
-              "pb-2 md:pb-4 font-mono text-[8px] sm:text-[10px] uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
-              activeTab === 'repayment' ? "text-black" : "text-black/70 font-bold hover:text-black"
+              "pb-2 font-mono text-[10px] sm:text-xs uppercase tracking-widest md:tracking-[0.2em] transition-all relative",
+              activeTab === 'repayment' ? "text-black font-black" : "text-black/70 font-bold hover:text-black"
             )}
           >
             REPAYMENT_CENTER
-            {activeTab === 'repayment' && <motion.div layoutId="tab" className="absolute bottom-[-9px] md:bottom-[-1px] left-0 right-0 h-0.5 bg-brutal-blue text-white " />}
+            {activeTab === 'repayment' && <motion.div layoutId="tab" className="absolute bottom-[-16px] left-0 right-0 h-1 bg-brutal-blue text-white" />}
           </button>
         </div>
 
