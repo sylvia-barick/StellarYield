@@ -1,5 +1,5 @@
 # 🌌 StellarYield: Micro-Lending Protocol
-
+ 
 <div align="center">
   <img src="ui1.png" width="800" alt="StellarYield Logo">
   
